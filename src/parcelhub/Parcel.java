@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * 
  * @author thomas.kercheval
  */
-public class Parcel {
+public class Parcel implements Comparable {
     /** The number of Parcels scanned by this hub. */
     //private static int numberOfParcels;
     
@@ -106,10 +106,33 @@ public class Parcel {
             }
             return bufferID.toString();
         } catch (NoSuchAlgorithmException ex) {
+            // Add user notification (though not neccesary)
             Logger.getLogger(Parcel.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(0);
         }
         return null;
+    }
+    
+    /**
+     * Implements the Comparable interface by comparing two Parcels' IDs.
+     * The return portion of this JavaDoc was copy-pasted from the Java API
+     * because my return statement uses the compareTo() method of the String
+     * class.
+     * 
+     * @param other The Parcel Object this is being compared to.
+     * @return the value 0 if the argument string is equal to this string; 
+     * a value less than 0 if this string is lexicographically less than the 
+     * string argument; and a value greater than 0 if this string is 
+     * lexicographically greater than the string argument.
+     */
+    @Override
+    public int compareTo(Object other) {
+        if (other instanceof Parcel) {
+            Parcel otherParcel = (Parcel) other;
+            return this.getID().compareTo(otherParcel.getID());
+        } else {
+            throw new ClassCastException();
+        }
     }
     
     /**
@@ -135,12 +158,18 @@ public class Parcel {
 
     /**
      * Determines if two Parcel objects are equivalent.
-     * @param other The other Parcel we are comparing to.
+     * @param otherObj The other Parcel we are comparing to.
      * @return true if this Parcel equals the other Parcel.
      */
-    public boolean equals(Parcel other) {
-        return this.parcelID.equals(other.parcelID)
-                && this.date.equals(other.date);
+    @Override
+    public boolean equals(Object otherObj) {
+        if (otherObj instanceof Parcel) {
+            Parcel other = (Parcel) otherObj;
+            return this.parcelID.equals(other.parcelID)
+                    && this.date.equals(other.date);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -148,6 +177,13 @@ public class Parcel {
      */
     public String getNameReciever() {
         return nameReciever;
+    }
+    
+    /**
+     * @return The Parcel's ID.
+     */
+    public String getID() {
+        return this.parcelID;
     }
 
     /**
