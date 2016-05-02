@@ -61,7 +61,7 @@ public class Parcel implements Comparable {
      * sets all other fields to empty strings.
      */
     public Parcel() {
-        this.date = getDate();
+        this.date = generateDate();
         this.nameReciever = "";
         this.address = "";
         this.city = "";
@@ -81,7 +81,7 @@ public class Parcel implements Comparable {
      */
     public Parcel(String name, String address, String city, String state,
             String zip) {
-        this.date = getDate();
+        this.date = generateDate();
         this.nameReciever = name;
         this.address = address;
         this.city = city;
@@ -106,7 +106,6 @@ public class Parcel implements Comparable {
             }
             return bufferID.toString();
         } catch (NoSuchAlgorithmException ex) {
-            // Add user notification (though not neccesary)
             Logger.getLogger(Parcel.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(0);
         }
@@ -114,12 +113,10 @@ public class Parcel implements Comparable {
     }
     
     /**
-     * Implements the Comparable interface by comparing two Parcels' IDs.
-     * The return portion of this JavaDoc was copy-pasted from the Java API
-     * because my return statement uses the compareTo() method of the String
-     * class.
-     * 
-     * @param other The Parcel Object this is being compared to.
+     * Compares one Parcel to another one, by alphanumeric ordering of their
+     * ID. Copying the return statement from the Java String API because I'm
+     * using the String.compareTo() method in my return statement.
+     * @param other Parcel to be compared
      * @return the value 0 if the argument string is equal to this string; 
      * a value less than 0 if this string is lexicographically less than the 
      * string argument; and a value greater than 0 if this string is 
@@ -127,28 +124,36 @@ public class Parcel implements Comparable {
      */
     @Override
     public int compareTo(Object other) {
-        if (other instanceof Parcel) {
-            Parcel otherParcel = (Parcel) other;
-            return this.getID().compareTo(otherParcel.getID());
-        } else {
-            throw new ClassCastException();
+        if (!(other instanceof Parcel)) {
+            System.out.println("NOT A PARCEL!!! Cannot compareTo...");
+            System.exit(0);
         }
+        Parcel otherParcel = (Parcel) other;
+        return this.parcelID.compareTo(otherParcel.parcelID);
+    }
+
+    /** @return The Parcel ID, which is an MD5 Hash. */
+    public String getParcelID() {
+        return parcelID;
+    }
+
+    /** @return The date our Parcel was created. */
+    public String getDate() {
+        return date;
     }
     
     /**
      * Generates the date and time that the Parcel was scanned by our hub.
      * @return The current date as a string `dd-MM-yy_HH-mm-SS`
      */
-    private String getDate() {
+    private String generateDate() {
         Date today = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:SS");
         String dateNow = dateFormat.format(today);
         return dateNow;
     }
 
-    /**
-     * @return String representation of Parcel object.
-     */
+    /** @return String representation of Parcel object. */
     @Override
     public String toString() {
         return "Parcel{" + "parcelID=" + parcelID + ", nameReciever=" 
@@ -158,93 +163,60 @@ public class Parcel implements Comparable {
 
     /**
      * Determines if two Parcel objects are equivalent.
-     * @param otherObj The other Parcel we are comparing to.
+     * @param other The other Parcel we are comparing to.
      * @return true if this Parcel equals the other Parcel.
      */
-    @Override
-    public boolean equals(Object otherObj) {
-        if (otherObj instanceof Parcel) {
-            Parcel other = (Parcel) otherObj;
-            return this.parcelID.equals(other.parcelID)
-                    && this.date.equals(other.date);
-        } else {
-            return false;
-        }
+    public boolean equals(Parcel other) {
+        return this.parcelID.equals(other.parcelID)
+                && this.date.equals(other.date);
     }
 
-    /**
-     * @return The Parcels recipient's name.
-     */
+    /** @return The Parcels recipient's name. */
     public String getNameReciever() {
         return nameReciever;
     }
-    
-    /**
-     * @return The Parcel's ID.
-     */
-    public String getID() {
-        return this.parcelID;
-    }
 
-    /**
-     * @param nameReciever The Parcels recipient's name.
-     */
+    /** @param nameReciever The Parcels recipient's name. */
     public void setNameReciever(String nameReciever) {
         this.nameReciever = nameReciever;
     }
 
-    /**
-     * @return The Parcel's recipient's street address.
-     */
+    /** @return The Parcel's recipient's street address. */
     public String getAddress() {
         return address;
     }
 
-    /**
-     * @param address The Parcel's recipient's street address.
-     */
+    /** @param address The Parcel's recipient's street address. */
     public void setAddress(String address) {
         this.address = address;
     }
 
-    /**
-     * @return The Parcel's recipient's city.
-     */
+    /** @return The Parcel's recipient's city.  */
     public String getCity() {
         return city;
     }
 
-    /**
-     * @param city The Parcel's recipient's city.
-     */
+    /** @param city The Parcel's recipient's city. */
     public void setCity(String city) {
         this.city = city;
     }
 
-    /**
-     * @return The Parcel's recipient's State.
-     */
+    /** @return The Parcel's recipient's State. */
     public String getState() {
         return state;
     }
 
-    /**
-     * @param state The Parcel's recipient's State.
-     */
+    /** @param state The Parcel's recipient's State. */
     public void setState(String state) {
         this.state = state;
     }
 
-    /**
-     * @return The Parcel's recipient's ZipCode.
-     */
+    /** @return The Parcel's recipient's ZipCode. */
     public String getZip() {
         return zip;
     }
 
-    /**
-     * @param zip The Parcel's recipient's ZipCode.
-     */
+    /** @param zip The Parcel's recipient's ZipCode. */
     public void setZip(String zip) {
         this.zip = zip;
     }
