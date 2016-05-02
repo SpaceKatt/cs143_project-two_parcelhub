@@ -1,3 +1,4 @@
+/nbproject/private/
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -7,3 +8,4 @@
 *.jar
 *.war
 *.ear
+/build/
