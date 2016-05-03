@@ -43,16 +43,8 @@ public class Parcel implements Comparable {
     
     /** The unique ID of the Parcel. */
     private final String parcelID;
-    /** The name of the Parcel's intended recipient. */
-    private String nameReciever;
-    /** The street address the Parcel will be shipped to. */
-    private String address;
-    /** The city the Parcel will be shipped to. */
-    private String city;
-    /** The state the Parcel will be shipped to. */
-    private String state;
-    /** The zipcode the Parcel will be shipped to. */
-    private String zip;
+    /** The Person the Parcel will be sent to. */
+    private final Person person;
     /** The date the Parcel was scanned. */
     private final String date;
     
@@ -62,11 +54,7 @@ public class Parcel implements Comparable {
      */
     public Parcel() {
         this.date = generateDate();
-        this.nameReciever = "";
-        this.address = "";
-        this.city = "";
-        this.state = "";
-        this.zip = "";
+        this.person = new Person("", "", "", "", "");
         this.parcelID = generateID();
     }
     
@@ -82,11 +70,18 @@ public class Parcel implements Comparable {
     public Parcel(String name, String address, String city, String state,
             String zip) {
         this.date = generateDate();
-        this.nameReciever = name;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
+        this.person = new Person(name, address, city, state, zip);
+        this.parcelID = generateID();
+    }
+    
+    /**
+     * Overloaded constructor, takes a Person object, 
+     * generates ID and date scanner.
+     * @param parcelReciever The person whom shall receive the Parcel.
+     */
+    public Parcel(Person parcelReciever) {
+        this.date = generateDate();
+        this.person = new Person(parcelReciever);
         this.parcelID = generateID();
     }
     
@@ -157,8 +152,9 @@ public class Parcel implements Comparable {
     @Override
     public String toString() {
         return "Parcel{" + "parcelID=" + parcelID + ", nameReciever=" 
-                + nameReciever + ", address=" + address + ", city=" + city 
-                + ", state=" + state + ", zip=" + zip + ", date=" + date + '}';
+                + person.getNameReciever() + ", address=" + person.getAddress() 
+                + ", city=" + person.getCity() + ", state=" + person.getState()
+                + ", zip=" + person.getZip() + ", date=" + date + '}';
     }
 
     /**
@@ -173,52 +169,56 @@ public class Parcel implements Comparable {
 
     /** @return The Parcels recipient's name. */
     public String getNameReciever() {
-        return nameReciever;
+        return person.getNameReciever();
     }
 
     /** @param nameReciever The Parcels recipient's name. */
     public void setNameReciever(String nameReciever) {
-        this.nameReciever = nameReciever;
+        person.setNameReciever(nameReciever);
     }
 
     /** @return The Parcel's recipient's street address. */
     public String getAddress() {
-        return address;
+        return person.getAddress();
     }
 
     /** @param address The Parcel's recipient's street address. */
     public void setAddress(String address) {
-        this.address = address;
+        person.setAddress(address);
     }
 
     /** @return The Parcel's recipient's city.  */
     public String getCity() {
-        return city;
+        return person.getCity();
     }
 
     /** @param city The Parcel's recipient's city. */
     public void setCity(String city) {
-        this.city = city;
+        person.setCity(city);
     }
 
     /** @return The Parcel's recipient's State. */
     public String getState() {
-        return state;
+        return person.getState();
     }
 
     /** @param state The Parcel's recipient's State. */
     public void setState(String state) {
-        this.state = state;
+        person.setState(state);
     }
 
     /** @return The Parcel's recipient's ZipCode. */
     public String getZip() {
-        return zip;
+        return person.getZip();
     }
 
     /** @param zip The Parcel's recipient's ZipCode. */
     public void setZip(String zip) {
-        this.zip = zip;
+        person.setZip(zip);
     }
     
+    /** @return The Person who this Parcel will be shipped to. */
+    public Person getPerson() {
+        return this.person;
+    }
 }
