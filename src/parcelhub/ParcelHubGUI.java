@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import parcelhub.utilities.ParcelCSVFileReader;
 import static parcelhub.utilities.SortingAlgorithms.insertionSort;
 
 /**
@@ -41,7 +42,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      */
     HashMap stateMap;
     /** Contains our Parcel objects. */
-    ArrayList parcels;
+    ArrayList<Parcel> parcels;
 
     /** An array of all relevant state abbreviations. */
     public static final String[] STATE_ABBV = new String[]{"AK", "AL", "AR", 
@@ -51,13 +52,22 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         "OK", "OR", "PA", "PR", "PW", "RI", "SC", "SD", "TN", "TX", "UT", "VA", 
         "VI", "VT", "WA", "WI", "WV", "WY"};
     /** The relative path of our Parcel database. */
-    public static final String FILE_NAME = "./data/Parcels.txt";
+    public static final String FILE_NAME = "src/parcelhub/data/Parcels.txt";
+    public static final int ID_INDEX = 0;
+    public static final int NAME_INDEX = 1;
+    public static final int ADDRESS_INDEX = 2;
+    public static final int CITY_INDEX = 3;
+    public static final int STATE_INDEX = 4;
+    public static final int ZIP_INDEX = 5;
+    public static final int DATE_INDEX = 6;
 
     /**
      * Creates new form ParcelHubGUI
      */
     public ParcelHubGUI() {
         initComponents();
+        setLocationRelativeTo(null);
+        parcels = new ArrayList<>();
         stateMap = createStateMap();
         this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
         readFromFile(FILE_NAME);
@@ -72,7 +82,15 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * @param fileName The fileName of our database.
      */
     private void readFromFile(String fileName) {
-        
+        parcels.clear();
+        ParcelCSVFileReader reader = new ParcelCSVFileReader(fileName);
+        String line;
+        while ((line = reader.readRecord()) != null) {
+            String[] parcelInfo = line.split(","); // Create Array of info
+            Parcel parcel = new Parcel(parcelInfo); // Use Array Constructor
+            parcels.add(parcel);
+        }
+        reader.close();
     }
     
     /**
@@ -88,7 +106,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * to the ArrayLists attached to States in the HashMap.
      */
     private void pushToStateMap() {
-        
+        for (Parcel parcel: parcels) {
+            String state = parcel.getState();
+            ArrayList<Parcel> list = (ArrayList<Parcel>) stateMap.get(state);
+            list.add(parcel);
+        }
         sortAllArrayLists();
     }
     
@@ -100,9 +122,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
         DefaultListModel model = new DefaultListModel();
         for (Parcel parcel: parcelArrayList) {
-            model.addElement(parcel);
+            model.addElement(parcel.getParcelID());
         }
         this.parcelList.setModel(model);
+        parcelList.setSelectedIndex(0);
     }
     
     /**
@@ -111,14 +134,17 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      */
     private void showParcelInformation(int index) {
         String state = (String) stateComboBox.getSelectedItem();
-        Parcel parcel = (Parcel)((ArrayList)stateMap.get(state)).get(index);
-        nameTextField.setText(parcel.getNameReciever());
-        addressTextField.setText(parcel.getAddress());
-        parcelIDTextField.setText(parcel.getParcelID());
-        arrivalTextField.setText(parcel.getDate());
-        stateTextField.setText(parcel.getState());
-        zipTextField.setText(parcel.getZip());
-        cityTextField.setText(parcel.getCity());
+        if (index != -1) {
+            Parcel parcel = (Parcel)((ArrayList)stateMap.get(state)).get(index);
+            nameTextField.setText(parcel.getNameReciever());
+            addressTextField.setText(parcel.getAddress());
+            parcelIDTextField.setText(parcel.getParcelID());
+            arrivalTextField.setText(parcel.getDate());
+            stateTextField.setText(parcel.getState());
+            zipTextField.setText(parcel.getZip());
+            cityTextField.setText(parcel.getCity());
+        }
+        
     }
     
     /**
@@ -141,8 +167,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private void sortAllArrayLists() {
         insertionSort(parcels);
         for (String state : ParcelHubGUI.STATE_ABBV) {
-            ArrayList<Comparable> listToSort = (ArrayList)stateMap.get(state);
-            insertionSort(listToSort);
+            insertionSort((ArrayList)stateMap.get(state));
         }
     }
     
@@ -381,10 +406,21 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         byStatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcels By State"));
 
+        stateComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                stateComboBoxItemStateChanged(evt);
+            }
+        });
+
         parcelList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        parcelList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                parcelListValueChanged(evt);
+            }
         });
         parcelScrollPanel.setViewportView(parcelList);
 
@@ -467,6 +503,14 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_zipTextFieldActionPerformed
+
+    private void parcelListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_parcelListValueChanged
+        showParcelInformation(parcelList.getSelectedIndex());
+    }//GEN-LAST:event_parcelListValueChanged
+
+    private void stateComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stateComboBoxItemStateChanged
+        displayParcels();
+    }//GEN-LAST:event_stateComboBoxItemStateChanged
 
     /**
      * @param args the command line arguments

@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * 
  * @author thomas.kercheval
  */
-public class Parcel implements Comparable {
+public class Parcel implements Comparable<Parcel> {
     /** The number of Parcels scanned by this hub. */
     //private static int numberOfParcels;
     
@@ -86,6 +86,24 @@ public class Parcel implements Comparable {
     }
     
     /**
+     * Overloaded constructor, takes a String array which is generated
+     * while reading Parcels from the database. All fields are already
+     * known so there is no need for generation of ID or Date.
+     * @param parcelInfo All necessary fields needed to construct a Parcel
+     * are stored in this array. Indices are stored as constants in 
+     * ParcelHubGUI.
+     */
+    public Parcel(String[] parcelInfo) {
+        this.date = parcelInfo[ParcelHubGUI.DATE_INDEX];
+        this.person = new Person(parcelInfo[ParcelHubGUI.NAME_INDEX], 
+                parcelInfo[ParcelHubGUI.ADDRESS_INDEX], 
+                parcelInfo[ParcelHubGUI.CITY_INDEX], 
+                parcelInfo[ParcelHubGUI.STATE_INDEX],
+                parcelInfo[ParcelHubGUI.ZIP_INDEX]);
+        this.parcelID = parcelInfo[ParcelHubGUI.ID_INDEX];
+    }
+    
+    /**
      * Generates the ParcelID by generating an MD5 hash from Parcel's
      * toString method.
      * @return Parcel ID MD5
@@ -118,7 +136,7 @@ public class Parcel implements Comparable {
      * lexicographically greater than the string argument.
      */
     @Override
-    public int compareTo(Object other) {
+    public int compareTo(Parcel other) {
         if (!(other instanceof Parcel)) {
             System.out.println("NOT A PARCEL!!! Cannot compareTo...");
             System.exit(0);

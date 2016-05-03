@@ -41,9 +41,9 @@ public class SortingAlgorithms {
      * @param indexOne Index of first item we want to swap
      * @param indexTwo Index of second item we want to swap
      */
-    public static void swap(ArrayList<Comparable> list, int indexOne, 
+    public static void swap(ArrayList<Parcel> list, int indexOne, 
                             int indexTwo) {
-        Comparable temp = list.get(indexOne);
+        Parcel temp = list.get(indexOne);
         list.set(indexOne, list.get(indexTwo));
         list.set(indexTwo, temp);
     }
@@ -56,7 +56,7 @@ public class SortingAlgorithms {
      * @param two Object to compare to one.
      * @return true if one is less than two in their ordering.
      */
-    public static boolean less(Comparable one, Comparable two) {
+    public static boolean less(Parcel one, Parcel two) {
         return one.compareTo(two) < 0;
     }
     
@@ -68,7 +68,7 @@ public class SortingAlgorithms {
      * @param two Object to compare to one.
      * @return true if one is less than two in their ordering.
      */
-    public static boolean lessZip(Comparable one, Comparable two) {
+    public static boolean lessZip(Parcel one, Parcel two) {
         if (one instanceof Parcel && two instanceof Parcel) {
             Parcel oneParcel = (Parcel) one;
             Parcel twoParcel = (Parcel) two;
@@ -92,7 +92,7 @@ public class SortingAlgorithms {
      * @param two Object to compare to one.
      * @return true if one is less than two in their ordering.
      */
-    public static boolean lessDate(Comparable one, Comparable two) {
+    public static boolean lessDate(Parcel one, Parcel two) {
         if (one instanceof Parcel && two instanceof Parcel) {
             Parcel oneParcel = (Parcel) one;
             Parcel twoParcel = (Parcel) two;
@@ -113,7 +113,7 @@ public class SortingAlgorithms {
      * objects. Sort by Parcel ID.
      * @param list The ArrayList we want to sort.
      */
-    public static void insertionSort(ArrayList<Comparable> list) {
+    public static void insertionSort(ArrayList<Parcel> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = i; j > 0 && less(list.get(j), list.get(j - 1)); j--) {
                 swap(list, j, j - 1);
@@ -126,7 +126,7 @@ public class SortingAlgorithms {
      * objects. Sort by Parcel ZIP, then collisions by ID.
      * @param list The ArrayList we want to sort.
      */
-    public static void insertionSortByZip(ArrayList<Comparable> list) {
+    public static void insertionSortByZip(ArrayList<Parcel> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = i; j > 0 && lessZip(list.get(j), 
                     list.get(j - 1)); j--) {
@@ -140,7 +140,7 @@ public class SortingAlgorithms {
      * objects. Sort by Parcel ZIP, then collisions by ID.
      * @param list The ArrayList we want to sort.
      */
-    public static void insertionSortByDate(ArrayList<Comparable> list) {
+    public static void insertionSortByDate(ArrayList<Parcel> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = i; j > 0 && lessDate(list.get(j), 
                     list.get(j - 1)); j--) {
@@ -154,7 +154,7 @@ public class SortingAlgorithms {
      * objects. Sort by Parcel ID.
      * @param list The ArrayList we want to sort.
      */
-    public static void selectionSort(ArrayList<Comparable> list) {
+    public static void selectionSort(ArrayList<Parcel> list) {
         for (int i = 0; i < list.size(); i++) {
             int minIndex = i;
             for (int j = i; j < list.size(); j++) {
