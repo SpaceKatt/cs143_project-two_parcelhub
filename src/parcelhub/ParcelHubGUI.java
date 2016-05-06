@@ -16,6 +16,7 @@
  */
 package parcelhub;
 
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
@@ -73,13 +74,25 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * Creates new form ParcelHubGUI
      */
     public ParcelHubGUI() {
+        DatabaseSelector selector = new DatabaseSelector();
+        selector.setVisible(true);
+        fileName = selector.getFileName();
+        if (fileName == null) {
+            JOptionPane.showMessageDialog(null, "No database was selected...",
+                    "Database Not Selected",
+                    JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
         initComponents();
         setLocationRelativeTo(null);
+        this.getRootPane().setDefaultButton(this.scanNewButton);
+        this.setIconImage(Toolkit.getDefaultToolkit().
+                getImage("src/parcelhub/images/238be5e.png"));
         parcels = new ArrayList<>();
         stateMap = createStateMap();
         this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
-        readFromFile(FILE_NAME);
-        fileName = FILE_NAME;
+        readFromFile(fileName);
+//        fileName = FILE_NAME;
         pushToStateMap();
         
         displayFirstNonEmptyState();
@@ -95,7 +108,9 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private void displayFirstNonEmptyState() {
         String state = (String) stateComboBox.getSelectedItem();
         ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
-        if (parcelArrayList.isEmpty()) {
+        if (stateComboBox.getSelectedIndex() > 55) {
+            stateComboBox.setSelectedIndex(0);
+        } else if (parcelArrayList.isEmpty()) {
             int index = stateComboBox.getSelectedIndex() + 1;
             stateComboBox.setSelectedIndex(index);
             displayFirstNonEmptyState();
@@ -143,8 +158,9 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
         DefaultListModel model = new DefaultListModel();
         insertionSort(parcelArrayList);
-        for (Parcel parcel: parcelArrayList) {
-            model.addElement(parcel.getParcelID());
+        for (int i = 0; i < parcelArrayList.size(); i++) {
+            model.addElement((i + 1) + ": " 
+                    + parcelArrayList.get(i).getParcelID());
         }
         this.parcelList.setModel(model);
         if (parcelArrayList.size() <= 1) {
@@ -162,6 +178,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             this.removeButton.setEnabled(true);
             this.editButton.setEnabled(true);
             parcelList.setSelectedIndex(0);
+        }
+        if (parcels.isEmpty()) {
+            this.seachButton.setEnabled(false);
+        } else {
+            this.seachButton.setEnabled(true);
         }
     }
     
@@ -267,6 +288,8 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         arrivalLabel.setText("Arrived at:");
 
+        arrivalTextField.setEditable(false);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
@@ -323,6 +346,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         editButton.setMnemonic('e');
         editButton.setText("Edit");
         editButton.setToolTipText("Edit existing Parcel in System");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(editButton);
 
         seachButton.setMnemonic('h');
@@ -600,7 +628,6 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 parcels.add(newParcel);
                 pushToStateMap();
                 displayParcels();
-                System.out.println(newParcel);
                 saveParcels();
                 searchParcel(newParcel.getParcelID());
             }
@@ -634,6 +661,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (reply == JOptionPane.YES_OPTION) {
             String parcelID = this.parcelList.getSelectedValue();
+            parcelID = parcelID.substring(parcelID.lastIndexOf(" ")+1);
             int index = linearSearch(parcels, parcelID);
             
             parcels.remove(index);
@@ -662,6 +690,32 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         this.parcelList.setSelectedIndex(nextIndex);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        int location = this.parcelList.getSelectedIndex();
+        String parcelID = this.parcelList.getSelectedValue();
+        parcelID = parcelID.substring(parcelID.lastIndexOf(" ")+1);
+        int index = linearSearch(parcels, parcelID);
+        try {    
+            ParcelEditer editor = new ParcelEditer(parcels.get(index));
+            editor.setLocationRelativeTo(this);
+            editor.setVisible(true);
+            Parcel newParcel = editor.getParcel();
+            if (newParcel != null) {
+                parcels.set(index, newParcel);
+                pushToStateMap();
+                displayParcels();
+                saveParcels();
+                searchParcel(newParcel.getParcelID());
+            }
+        } catch (NullPointerException nullex) {
+            JOptionPane.showMessageDialog(null, "Parcel not Scanned",
+                    "Input Error",
+                    JOptionPane.WARNING_MESSAGE);
+            parcelList.setVisible(true);
+            parcelList.setSelectedIndex(location);
+        }
+    }//GEN-LAST:event_editButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -689,6 +743,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

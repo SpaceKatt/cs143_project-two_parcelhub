@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 thomas.kercheval
+ * Copyright (C) 2016 Thomas
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 package parcelhub;
 
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import static parcelhub.ParcelHubGUI.STATE_ABBV;
@@ -25,28 +24,78 @@ import parcelhub.utilities.Validation;
 
 /**
  *
- * @author thomas.kercheval
+ * @author Thomas
  */
-public class ParcelScanner extends javax.swing.JDialog {
-    private Parcel newParcel;
+public class ParcelEditer extends javax.swing.JDialog {
+    Parcel editParcel;
+    
+    /**
+     * Creates new form ParcelEditer
+     */
+    public ParcelEditer(Parcel parcel) {
+        initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().
+                getImage("src/parcelhub/images/238be5e.png"));
+        this.setModal(true);
+        this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
+        editParcel = new Parcel(parcel);
+        nameTextField.setText(parcel.getNameReciever());
+        addressTextField.setText(parcel.getAddress());
+        stateComboBox.setSelectedItem(parcel.getState());
+        zipTextField.setText(parcel.getZip());
+        cityTextField.setText(parcel.getCity());
+        this.getRootPane().setDefaultButton(this.saveButton);
+    }
 
     /**
-     * Creates new form ParcelScanner
+     * Creates new form ParcelEditer
      */
-    public ParcelScanner() {
+    public ParcelEditer() {
         initComponents();
         this.setModal(true);
         this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
-        this.getRootPane().setDefaultButton(this.saveButton);
-        this.setIconImage(Toolkit.getDefaultToolkit().
-                getImage("src/parcelhub/images/238be5e.png"));
     }
     
-    /** @return The Parcel that is was scanned. */
+    /** @return The edited Parcel. */
     public Parcel getParcel() {
-        return newParcel;
+        return editParcel;
     }
-
+    
+    private boolean validateFields(String name, String address, String city, 
+            String zip) {
+        if (!Validation.isName(name)) {
+            JOptionPane.showMessageDialog(this,
+                                          "Must enter a valid name.\n"
+                                        + "First and Last, middle optional.\n"
+                                        + "\nDid you remember to Capitalize?",
+                                          "Incomplete Form",
+                                          JOptionPane.ERROR_MESSAGE);
+            return false;
+//        } else if (!Validation.isAddress(address)) {
+//            JOptionPane.showMessageDialog(this,
+//                                          "Must enter a valid address.",
+//                                          "Incomplete Form",
+//                                          JOptionPane.ERROR_MESSAGE);
+//            
+//            return false;
+//        } else if (!Validation.isCity(city)) {
+//            JOptionPane.showMessageDialog(this,
+//                                          "Must enter a valid city.",
+//                                          "Incomplete Form",
+//                                          JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        } else if (!Validation.isZip(city)) {
+//            JOptionPane.showMessageDialog(this,
+//                                          "Must enter a valid ZipCode.",
+//                                          "Incomplete Form",
+//                                          JOptionPane.ERROR_MESSAGE);
+//            return false;
+        }
+        
+        
+        return true;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,8 +120,8 @@ public class ParcelScanner extends javax.swing.JDialog {
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         titlePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
+        logoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -137,7 +186,7 @@ public class ParcelScanner extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(zipLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(zipTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
+                        .addComponent(zipTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         informationPanelLayout.setVerticalGroup(
@@ -159,7 +208,7 @@ public class ParcelScanner extends javax.swing.JDialog {
                     .addComponent(zipLabel)
                     .addComponent(zipTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         getContentPane().add(informationPanel, java.awt.BorderLayout.CENTER);
@@ -184,11 +233,11 @@ public class ParcelScanner extends javax.swing.JDialog {
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.SOUTH);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Scan a Parcel");
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        titleLabel.setText("Edit a Parcel");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
+        logoLabel.setText("jLabel2");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
         titlePanel.setLayout(titlePanelLayout);
@@ -196,18 +245,18 @@ public class ParcelScanner extends javax.swing.JDialog {
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlePanelLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         titlePanelLayout.setVerticalGroup(
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -216,32 +265,22 @@ public class ParcelScanner extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         saveButtonActionPerformed(evt);
-    }//GEN-LAST:event_zipTextFieldActionPerformed
-
-    private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
-        saveButtonActionPerformed(evt);
-    }//GEN-LAST:event_cityTextFieldActionPerformed
+    }//GEN-LAST:event_nameTextFieldActionPerformed
 
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_addressTextFieldActionPerformed
 
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+    private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
         saveButtonActionPerformed(evt);
-    }//GEN-LAST:event_nameTextFieldActionPerformed
+    }//GEN-LAST:event_cityTextFieldActionPerformed
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        this.newParcel = null;
-        this.setVisible(false);
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
+        saveButtonActionPerformed(evt);
+    }//GEN-LAST:event_zipTextFieldActionPerformed
 
-    /**
-     * Saves our new Parcel, performs validation of the inputs, and closes 
-     * the window.
-     * @param evt 
-     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String name = this.nameTextField.getText();
         String address = this.addressTextField.getText();
@@ -249,48 +288,22 @@ public class ParcelScanner extends javax.swing.JDialog {
         String state = (String) this.stateComboBox.getSelectedItem();
         String city = this.cityTextField.getText();
         if (validateFields(name, address, city, zip)) {
-            newParcel = new Parcel(name, address, city, state, zip);
+            editParcel.setNameReciever(name);
+            editParcel.setCity(city);
+            editParcel.setAddress(address);
+            editParcel.setZip(zip);
+            editParcel.setState(state);
             this.setVisible(false);
         } else {
-            // Do nothing  
+            // Do nothing
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private boolean validateFields(String name, String address, String city, 
-            String zip) {
-        if (!Validation.isName(name)) {
-            JOptionPane.showMessageDialog(this,
-                                          "Must enter a valid name.\n"
-                                        + "First and Last, middle optional.\n"
-                                        + "\nDid you remember to Capitalize?",
-                                          "Incomplete Form",
-                                          JOptionPane.ERROR_MESSAGE);
-            return false;
-//        } else if (!Validation.isAddress(address)) {
-//            JOptionPane.showMessageDialog(this,
-//                                          "Must enter a valid address.",
-//                                          "Incomplete Form",
-//                                          JOptionPane.ERROR_MESSAGE);
-//            
-//            return false;
-//        } else if (!Validation.isCity(city)) {
-//            JOptionPane.showMessageDialog(this,
-//                                          "Must enter a valid city.",
-//                                          "Incomplete Form",
-//                                          JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        } else if (!Validation.isZip(city)) {
-//            JOptionPane.showMessageDialog(this,
-//                                          "Must enter a valid ZipCode.",
-//                                          "Incomplete Form",
-//                                          JOptionPane.ERROR_MESSAGE);
-//            return false;
-        }
-        
-        
-        return true;
-    }    
-    
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.editParcel = null;
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -308,20 +321,20 @@ public class ParcelScanner extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ParcelScanner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ParcelEditer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ParcelScanner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ParcelEditer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ParcelScanner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ParcelEditer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ParcelScanner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ParcelEditer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ParcelScanner().setVisible(true);
+                new ParcelEditer().setVisible(true);
             }
         });
     }
@@ -334,13 +347,13 @@ public class ParcelScanner extends javax.swing.JDialog {
     private javax.swing.JTextField cityTextField;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel informationPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton saveButton;
     private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel stateLabel;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JLabel zipLabel;
     private javax.swing.JTextField zipTextField;

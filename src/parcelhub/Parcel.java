@@ -104,6 +104,17 @@ public class Parcel implements Comparable<Parcel> {
     }
     
     /**
+     * Clone constructor, creates a clone of the Parcel supplied to the
+     * constructor.
+     * @param parcel The Parcel we wish to clone.
+     */
+    public Parcel(Parcel parcel) {
+        this.date = parcel.date;
+        this.person = new Person(parcel.person);
+        this.parcelID = parcel.parcelID;
+    }
+    
+    /**
      * Generates the ParcelID by generating an MD5 hash from Parcel's
      * toString method.
      * @return Parcel ID MD5
@@ -161,7 +172,7 @@ public class Parcel implements Comparable<Parcel> {
      */
     private String generateDate() {
         Date today = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:SS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         String dateNow = dateFormat.format(today);
         return dateNow;
     }
