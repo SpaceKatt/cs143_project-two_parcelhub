@@ -120,6 +120,9 @@
             <Property name="text" type="java.lang.String" value="Scan New"/>
             <Property name="toolTipText" type="java.lang.String" value="Scan New Parcel into System"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="scanNewButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="removeButton">
           <Properties>
@@ -127,6 +130,9 @@
             <Property name="text" type="java.lang.String" value="Remove"/>
             <Property name="toolTipText" type="java.lang.String" value="Remove Parcel from System"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="editButton">
           <Properties>
@@ -141,6 +147,9 @@
             <Property name="text" type="java.lang.String" value="Search"/>
             <Property name="toolTipText" type="java.lang.String" value="Search for Parcel in System"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seachButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="backButton">
           <Properties>
@@ -148,6 +157,9 @@
             <Property name="text" type="java.lang.String" value="&lt; Back"/>
             <Property name="toolTipText" type="java.lang.String" value="View previous Parcel"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="nextButton">
           <Properties>
@@ -155,6 +167,9 @@
             <Property name="text" type="java.lang.String" value="Next &gt;"/>
             <Property name="toolTipText" type="java.lang.String" value="View Next Parcel"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -170,9 +185,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="informationPanel" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="byStatePanel" min="-2" max="-2" attributes="0"/>
+                  <Component id="informationPanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="byStatePanel" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -218,8 +233,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="nameTextField" pref="496" max="32767" attributes="0"/>
-                                  <Component id="addressTextField" alignment="0" pref="496" max="32767" attributes="0"/>
+                                  <Component id="nameTextField" max="32767" attributes="0"/>
+                                  <Component id="addressTextField" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="cityTextField" min="-2" pref="139" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -229,7 +244,7 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="zipLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="zipTextField" max="32767" attributes="0"/>
+                                      <Component id="zipTextField" pref="107" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -373,7 +388,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="parcelScrollPanel" max="32767" attributes="0"/>
-                          <Component id="stateComboBox" pref="165" max="32767" attributes="0"/>
+                          <Component id="stateComboBox" pref="284" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>

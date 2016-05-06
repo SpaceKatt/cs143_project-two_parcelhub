@@ -20,7 +20,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import parcelhub.utilities.ParcelCSVFileReader;
+import parcelhub.utilities.ParcelCSVFileWriter;
+import static parcelhub.utilities.SearchingAlgorithms.binarySearch;
+import static parcelhub.utilities.SearchingAlgorithms.linearSearch;
 import static parcelhub.utilities.SortingAlgorithms.insertionSort;
 
 /**
@@ -30,7 +34,9 @@ import static parcelhub.utilities.SortingAlgorithms.insertionSort;
  * means.
  *
  * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
- * Course: CS 143 Created on May 2, 2016, 5:06:21 PM Revised on May 2, 2016,
+ * Course: CS 143 
+ * Created on May 2, 2016, 5:06:21 PM 
+ * Revised on May 2, 2016,
  *
  * @author thomas.kercheval
  */
@@ -43,6 +49,8 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     HashMap stateMap;
     /** Contains our Parcel objects. */
     ArrayList<Parcel> parcels;
+    /** The name of our current database. */
+    String fileName;
 
     /** An array of all relevant state abbreviations. */
     public static final String[] STATE_ABBV = new String[]{"AK", "AL", "AR", 
@@ -71,10 +79,27 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         stateMap = createStateMap();
         this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
         readFromFile(FILE_NAME);
+        fileName = FILE_NAME;
         pushToStateMap();
-
+        
+        displayFirstNonEmptyState();
         displayParcels();
         showParcelInformation(parcelList.getSelectedIndex());
+    }
+    
+    /**
+     * This method finds the first state, alphabetically, that has Parcels
+     * being delivered to it.
+     * @return The index of the first alphabetically nonempty state.
+     */
+    private void displayFirstNonEmptyState() {
+        String state = (String) stateComboBox.getSelectedItem();
+        ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
+        if (parcelArrayList.isEmpty()) {
+            int index = stateComboBox.getSelectedIndex() + 1;
+            stateComboBox.setSelectedIndex(index);
+            displayFirstNonEmptyState();
+        }
     }
 
     /**
@@ -94,18 +119,14 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     }
     
     /**
-     * Writes the contents of ArrayList parcels to the Database File.
-     * @param fileName 
-     */
-    private void writeToFile(String fileName) {
-        
-    }
-    
-    /**
      * This method distributes parcels from the ArrayList parcels
      * to the ArrayLists attached to States in the HashMap.
      */
     private void pushToStateMap() {
+        for (String state: this.STATE_ABBV) {
+            ArrayList<Parcel> list = (ArrayList<Parcel>) stateMap.get(state);
+            list.clear();
+        }
         for (Parcel parcel: parcels) {
             String state = parcel.getState();
             ArrayList<Parcel> list = (ArrayList<Parcel>) stateMap.get(state);
@@ -121,11 +142,38 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         String state = (String) stateComboBox.getSelectedItem();
         ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
         DefaultListModel model = new DefaultListModel();
+        insertionSort(parcelArrayList);
         for (Parcel parcel: parcelArrayList) {
             model.addElement(parcel.getParcelID());
         }
         this.parcelList.setModel(model);
-        parcelList.setSelectedIndex(0);
+        if (parcelArrayList.size() <= 1) {
+            this.backButton.setEnabled(false);
+            this.nextButton.setEnabled(false);
+        } else {
+            this.backButton.setEnabled(true);
+            this.nextButton.setEnabled(true);
+        }
+        if (parcelArrayList.isEmpty()) {
+            clearParcelDisplay();
+            this.removeButton.setEnabled(false);
+            this.editButton.setEnabled(false);
+        } else {
+            this.removeButton.setEnabled(true);
+            this.editButton.setEnabled(true);
+            parcelList.setSelectedIndex(0);
+        }
+    }
+    
+    /** This method clears the displayed Parcel information TextFields. */
+    private void clearParcelDisplay() {
+        nameTextField.setText("");
+            addressTextField.setText("");
+            parcelIDTextField.setText("");
+            arrivalTextField.setText("");
+            stateTextField.setText("");
+            zipTextField.setText("");
+            cityTextField.setText("");
     }
     
     /**
@@ -255,11 +303,21 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         scanNewButton.setMnemonic('s');
         scanNewButton.setText("Scan New");
         scanNewButton.setToolTipText("Scan New Parcel into System");
+        scanNewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scanNewButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(scanNewButton);
 
         removeButton.setMnemonic('R');
         removeButton.setText("Remove");
         removeButton.setToolTipText("Remove Parcel from System");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(removeButton);
 
         editButton.setMnemonic('e');
@@ -270,16 +328,31 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         seachButton.setMnemonic('h');
         seachButton.setText("Search");
         seachButton.setToolTipText("Search for Parcel in System");
+        seachButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seachButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(seachButton);
 
         backButton.setMnemonic('B');
         backButton.setText("< Back");
         backButton.setToolTipText("View previous Parcel");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(backButton);
 
         nextButton.setMnemonic('N');
         nextButton.setText("Next >");
         nextButton.setToolTipText("View Next Parcel");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonActionPerformed(evt);
+            }
+        });
         controlPanel.add(nextButton);
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.SOUTH);
@@ -364,8 +437,8 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                             .addComponent(addressLabel))
                         .addGap(22, 22, 22)
                         .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-                            .addComponent(addressTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                            .addComponent(nameTextField)
+                            .addComponent(addressTextField)
                             .addGroup(informationPanelLayout.createSequentialGroup()
                                 .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -375,7 +448,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(zipLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(zipTextField)))))
+                                .addComponent(zipTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         informationPanelLayout.setVerticalGroup(
@@ -432,7 +505,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(byStatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(parcelScrollPanel)
-                    .addComponent(stateComboBox, 0, 165, Short.MAX_VALUE))
+                    .addComponent(stateComboBox, 0, 284, Short.MAX_VALUE))
                 .addContainerGap())
         );
         byStatePanelLayout.setVerticalGroup(
@@ -450,9 +523,9 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(displayPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(informationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(byStatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(informationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(byStatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         displayPanelLayout.setVerticalGroup(
@@ -511,6 +584,83 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private void stateComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stateComboBoxItemStateChanged
         displayParcels();
     }//GEN-LAST:event_stateComboBoxItemStateChanged
+    /**
+     * Scans a new Parcel and adds it to our list. The database is rewritten
+     * after every successful new Parcel addition.
+     * @param evt 
+     */
+    private void scanNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanNewButtonActionPerformed
+        int location = this.parcelList.getSelectedIndex();
+        try {    
+            ParcelScanner scanner = new ParcelScanner();
+            scanner.setLocationRelativeTo(this);
+            scanner.setVisible(true);
+            Parcel newParcel = scanner.getParcel();
+            if (newParcel != null) {
+                parcels.add(newParcel);
+                pushToStateMap();
+                displayParcels();
+                System.out.println(newParcel);
+                saveParcels();
+                searchParcel(newParcel.getParcelID());
+            }
+        } catch (NullPointerException nullex) {
+            JOptionPane.showMessageDialog(null, "Parcel not Scanned",
+                    "Input Error",
+                    JOptionPane.WARNING_MESSAGE);
+            parcelList.setVisible(true);
+            parcelList.setSelectedIndex(location);
+        }
+    }//GEN-LAST:event_scanNewButtonActionPerformed
+
+    /**
+     * Initiates search for a Parcel by ID, takes input from user.
+     * @param evt 
+     */
+    private void seachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seachButtonActionPerformed
+        String parcelID = JOptionPane.showInputDialog(this, "Search for:",
+                "Search for Parcel ID",
+                JOptionPane.PLAIN_MESSAGE);
+        searchParcel(parcelID);
+    }//GEN-LAST:event_seachButtonActionPerformed
+    
+    /**
+     * Removes a Parcel from our database.
+     * @param evt 
+     */
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        int reply = JOptionPane.showConfirmDialog(this, "Are you sure?",
+                "Confirm Dancer deletion...",
+                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (reply == JOptionPane.YES_OPTION) {
+            String parcelID = this.parcelList.getSelectedValue();
+            int index = linearSearch(parcels, parcelID);
+            
+            parcels.remove(index);
+
+            pushToStateMap();
+            displayFirstNonEmptyState();
+            displayParcels();
+            showParcelInformation(parcelList.getSelectedIndex());
+            saveParcels();
+        } else {
+            // Do nothing
+        }
+    }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        int currentIndex = this.parcelList.getSelectedIndex();
+        int listSize = this.parcelList.getModel().getSize();
+        int nextIndex = (currentIndex + 1) % listSize;
+        this.parcelList.setSelectedIndex(nextIndex);
+    }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        int currentIndex = this.parcelList.getSelectedIndex();
+        int listSize = this.parcelList.getModel().getSize();
+        int nextIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : listSize - 1;
+        this.parcelList.setSelectedIndex(nextIndex);
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -582,4 +732,72 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JLabel zipLabel;
     private javax.swing.JTextField zipTextField;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Searches for a Parcel in our database by its ID. If the Parcel is
+     * found it will be selected in its state listing. If not then the user
+     * will be notified.
+     * @param parcelID 
+     */
+    private void searchParcel(String parcelID) {
+        if (parcelID == null || parcelID.length() == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No Parcel ID given.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int index = binarySearch(parcels, parcelID);
+        if (index != -1) {
+            Parcel parcel = parcels.get(index);
+            this.stateComboBox.setSelectedItem(parcel.getState());
+            String state = (String) stateComboBox.getSelectedItem();
+            ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
+            int parcelIndex = binarySearch(parcelArrayList, parcelID);
+            this.parcelList.setSelectedIndex(parcelIndex);
+        } else {
+            int indexTwo = linearSearch(parcels, parcelID);
+            if (indexTwo != -1) {
+                Parcel parcel = parcels.get(indexTwo);
+                this.stateComboBox.setSelectedItem(parcel.getState());
+                String state = (String) stateComboBox.getSelectedItem();
+                ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
+                int parcelIndex = linearSearch(parcelArrayList, parcelID);
+                this.parcelList.setSelectedIndex(parcelIndex);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        parcelID + " not found.",
+                        "Search Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Saves our Parcels to a text file that is named based on the 
+     * current date. The file is saved in `src.parcelhub.data`.
+     */
+    private void saveParcels() {
+        try {
+            writeToFile(this.fileName);
+        } catch (NullPointerException nullex) {
+            JOptionPane.showMessageDialog(null, "DATABASE NOT SAVED",
+                    "Input Error",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    /**
+     * Write Parcels to a text file that is comma delimited.
+     *
+     * @param file The file path of our database to be written pre-condition: a
+     * valid file name, post-condition: a new text file
+     * is created with the current Parcels in the database
+     * @see ParcelCSVFileWriter
+     * @see Parcel
+     */
+    public void writeToFile(String file) {
+        ParcelCSVFileWriter writer = new ParcelCSVFileWriter(file, parcels);
+        writer.writeTheFile();
+    }
 }
