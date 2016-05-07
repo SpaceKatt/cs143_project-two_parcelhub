@@ -90,14 +90,34 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 getImage("src/parcelhub/images/238be5e.png"));
         parcels = new ArrayList<>();
         stateMap = createStateMap();
-        this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
         readFromFile(fileName);
 //        fileName = FILE_NAME;
         pushToStateMap();
         
+        setModelForStateCombo();
         displayFirstNonEmptyState();
         displayParcels();
         showParcelInformation(parcelList.getSelectedIndex());
+    }
+    
+    private void setModelForStateCombo() {
+        ArrayList<String> filledStates = new ArrayList<>();
+        for (String state : STATE_ABBV) {
+            ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
+            if (!parcelArrayList.isEmpty()) {
+                filledStates.add(state);
+            }
+        }
+        if (filledStates.isEmpty()) {
+            filledStates.add("WA");
+            JOptionPane.showMessageDialog(null, "No Parcels Exist yet...\n"
+                    + "States will appear in the ComboBox as you add Parcels."
+                    + "\n\nSo have Washington State appear as a default!",
+                    "No Extant Parcels",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        String[] filledStatez = filledStates.toArray(new String[filledStates.size()]);
+        this.stateComboBox.setModel(new DefaultComboBoxModel(filledStatez));
     }
     
     /**
@@ -108,7 +128,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private void displayFirstNonEmptyState() {
         String state = (String) stateComboBox.getSelectedItem();
         ArrayList<Parcel> parcelArrayList = (ArrayList)stateMap.get(state);
-        if (stateComboBox.getSelectedIndex() > 55) {
+        if (stateComboBox.getSelectedIndex() == stateComboBox.getItemCount() - 1) {
             stateComboBox.setSelectedIndex(0);
         } else if (parcelArrayList.isEmpty()) {
             int index = stateComboBox.getSelectedIndex() + 1;
@@ -249,6 +269,8 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         titlePanel = new javax.swing.JPanel();
         arrivalLabel = new javax.swing.JLabel();
         arrivalTextField = new javax.swing.JTextField();
@@ -280,8 +302,23 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         parcelList = new javax.swing.JList<>();
         parcelMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        openMenuItem = new javax.swing.JMenuItem();
+        saveAsMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        printMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        exitMenuItem = new javax.swing.JMenuItem();
         actionMenu = new javax.swing.JMenu();
+        scanMenuItem = new javax.swing.JMenuItem();
+        removeMenuItem = new javax.swing.JMenuItem();
+        editMenuItem = new javax.swing.JMenuItem();
+        searchMenuItem = new javax.swing.JMenuItem();
+        searchZipMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parcel Hub");
@@ -567,13 +604,66 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         getContentPane().add(displayPanel, java.awt.BorderLayout.CENTER);
 
+        fileMenu.setMnemonic('F');
         fileMenu.setText("File");
+        fileMenu.setToolTipText("File menu lets you save databases, open databases, and exit the program");
+
+        openMenuItem.setMnemonic('o');
+        openMenuItem.setText("Open Database");
+        openMenuItem.setToolTipText("Open a different database");
+        fileMenu.add(openMenuItem);
+
+        saveAsMenuItem.setMnemonic('v');
+        saveAsMenuItem.setText("Save As...");
+        saveAsMenuItem.setToolTipText("Save Database under a new name");
+        fileMenu.add(saveAsMenuItem);
+        fileMenu.add(jSeparator2);
+
+        printMenuItem.setMnemonic('i');
+        printMenuItem.setText("Print");
+        printMenuItem.setToolTipText("Print the entire GUI");
+        fileMenu.add(printMenuItem);
+        fileMenu.add(jSeparator1);
+
+        exitMenuItem.setText("Exit");
+        fileMenu.add(exitMenuItem);
+
         parcelMenuBar.add(fileMenu);
 
+        actionMenu.setMnemonic('A');
         actionMenu.setText("Action");
+        actionMenu.setToolTipText("Sort, search, scan, edit, remove, and do various things to Parcels");
+
+        scanMenuItem.setMnemonic('w');
+        scanMenuItem.setText("Scan New");
+        scanMenuItem.setToolTipText("Scan a new Parcel");
+        actionMenu.add(scanMenuItem);
+
+        removeMenuItem.setMnemonic('o');
+        removeMenuItem.setText("Remove");
+        removeMenuItem.setToolTipText("Remove a Parcel");
+        actionMenu.add(removeMenuItem);
+
+        editMenuItem.setMnemonic('n');
+        editMenuItem.setText("Edit a Parcel");
+        editMenuItem.setToolTipText("Edit the current selected Parcel");
+        actionMenu.add(editMenuItem);
+
+        searchMenuItem.setMnemonic('m');
+        searchMenuItem.setText("Search by ID");
+        searchMenuItem.setToolTipText("Search for a Parcel by ID");
+        actionMenu.add(searchMenuItem);
+
+        searchZipMenuItem.setMnemonic('m');
+        searchZipMenuItem.setText("Search by Zip");
+        searchZipMenuItem.setToolTipText("Search for a Parcel by ZipCode");
+        actionMenu.add(searchZipMenuItem);
+
         parcelMenuBar.add(actionMenu);
 
+        helpMenu.setMnemonic('p');
         helpMenu.setText("Help");
+        helpMenu.setToolTipText("We are here to help");
         parcelMenuBar.add(helpMenu);
 
         setJMenuBar(parcelMenuBar);
@@ -765,21 +855,34 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JButton editButton;
+    private javax.swing.JMenuItem editMenuItem;
+    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel informationPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton nextButton;
+    private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel parcelIDLabel;
     private javax.swing.JTextField parcelIDTextField;
     private javax.swing.JList<String> parcelList;
     private javax.swing.JMenuBar parcelMenuBar;
     private javax.swing.JScrollPane parcelScrollPanel;
+    private javax.swing.JMenuItem printMenuItem;
     private javax.swing.JButton removeButton;
+    private javax.swing.JMenuItem removeMenuItem;
+    private javax.swing.JMenuItem saveAsMenuItem;
+    private javax.swing.JMenuItem scanMenuItem;
     private javax.swing.JButton scanNewButton;
     private javax.swing.JButton seachButton;
+    private javax.swing.JMenuItem searchMenuItem;
+    private javax.swing.JMenuItem searchZipMenuItem;
     private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTextField;
@@ -833,6 +936,9 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * current date. The file is saved in `src.parcelhub.data`.
      */
     private void saveParcels() {
+        setModelForStateCombo();
+        displayParcels();
+        showParcelInformation(parcelList.getSelectedIndex());
         try {
             writeToFile(this.fileName);
         } catch (NullPointerException nullex) {
