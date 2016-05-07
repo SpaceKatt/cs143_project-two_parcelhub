@@ -48,9 +48,9 @@ public class SearchingAlgorithms {
             int mid = (low + high) / 2;
             if (list.get(mid).getParcelID().equals(key)) {
                 return mid;
-            } else if (list.get(mid).getParcelID().compareTo(key) < 0) {
-                high = mid - 1;
             } else if (list.get(mid).getParcelID().compareTo(key) > 0) {
+                high = mid - 1;
+            } else if (list.get(mid).getParcelID().compareTo(key) < 0) {
                 low = mid + 1;
             }
         }
@@ -85,6 +85,9 @@ public class SearchingAlgorithms {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getZip().equalsIgnoreCase(zip)) {
                 results.add(i);
+            } else if (list.get(i).getZip().
+                    toLowerCase().contains(zip.toLowerCase())) {
+                results.add(i);
             }
         }
         return results;
@@ -101,6 +104,9 @@ public class SearchingAlgorithms {
         ArrayList<Integer> results = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getNameReciever().equalsIgnoreCase(name)) {
+                results.add(i);
+            } else if (list.get(i).getNameReciever().
+                    toLowerCase().contains(name.toLowerCase())) {
                 results.add(i);
             }
         }

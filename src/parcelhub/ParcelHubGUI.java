@@ -26,7 +26,9 @@ import parcelhub.utilities.ParcelCSVFileReader;
 import parcelhub.utilities.ParcelCSVFileWriter;
 import parcelhub.utilities.PrintUtilities;
 import static parcelhub.utilities.SearchingAlgorithms.binarySearch;
+import static parcelhub.utilities.SearchingAlgorithms.linearNameSearch;
 import static parcelhub.utilities.SearchingAlgorithms.linearSearch;
+import static parcelhub.utilities.SearchingAlgorithms.linearZipSearch;
 import static parcelhub.utilities.SortingAlgorithms.insertionSort;
 import parcelhub.utilities.Validation;
 
@@ -325,12 +327,16 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         actionMenu = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        viewAllParcelsMenuItem = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         scanMenuItem = new javax.swing.JMenuItem();
         removeMenuItem = new javax.swing.JMenuItem();
         editMenuItem = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         searchMenuItem = new javax.swing.JMenuItem();
+        searchNameMenuItem = new javax.swing.JMenuItem();
         searchZipMenuItem = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         backMenuItem = new javax.swing.JMenuItem();
         nextMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
@@ -694,10 +700,16 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         actionMenu.setText("Action");
         actionMenu.setToolTipText("Sort, search, scan, edit, remove, and do various things to Parcels");
 
-        jMenuItem3.setMnemonic('V');
-        jMenuItem3.setText("View All Parcels");
-        jMenuItem3.setToolTipText("Opens a new Window with all Parcels listed for selection");
-        actionMenu.add(jMenuItem3);
+        viewAllParcelsMenuItem.setMnemonic('V');
+        viewAllParcelsMenuItem.setText("View All Parcels");
+        viewAllParcelsMenuItem.setToolTipText("Opens a new Window with all Parcels listed for selection");
+        viewAllParcelsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllParcelsMenuItemActionPerformed(evt);
+            }
+        });
+        actionMenu.add(viewAllParcelsMenuItem);
+        actionMenu.add(jSeparator5);
 
         scanMenuItem.setMnemonic('w');
         scanMenuItem.setText("Scan New");
@@ -728,6 +740,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             }
         });
         actionMenu.add(editMenuItem);
+        actionMenu.add(jSeparator3);
 
         searchMenuItem.setMnemonic('I');
         searchMenuItem.setText("Search by ID");
@@ -739,10 +752,26 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         });
         actionMenu.add(searchMenuItem);
 
+        searchNameMenuItem.setMnemonic('a');
+        searchNameMenuItem.setText("Search by Name");
+        searchNameMenuItem.setToolTipText("Search for a Parcel by customer name");
+        searchNameMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNameMenuItemActionPerformed(evt);
+            }
+        });
+        actionMenu.add(searchNameMenuItem);
+
         searchZipMenuItem.setMnemonic('z');
         searchZipMenuItem.setText("Search by Zip");
         searchZipMenuItem.setToolTipText("Search for a Parcel by ZipCode");
+        searchZipMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchZipMenuItemActionPerformed(evt);
+            }
+        });
         actionMenu.add(searchZipMenuItem);
+        actionMenu.add(jSeparator4);
 
         backMenuItem.setMnemonic('b');
         backMenuItem.setText("Back");
@@ -989,6 +1018,64 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         nextButtonActionPerformed(evt);
     }//GEN-LAST:event_nextMenuItemActionPerformed
 
+    private void searchNameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNameMenuItemActionPerformed
+        String customerName = JOptionPane.showInputDialog(this, "Search for:",
+                "Search for Name",
+                JOptionPane.PLAIN_MESSAGE);
+        if (customerName == null || customerName.length() == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No Name given.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList<Integer> indices = linearNameSearch(parcels, customerName);
+        if (!indices.isEmpty()) {
+            displayParcelWindow(parcels, indices, "Search by Name Results");
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    customerName + " not found.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_searchNameMenuItemActionPerformed
+
+    private void viewAllParcelsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllParcelsMenuItemActionPerformed
+        ParcelWindow window = new ParcelWindow(parcels, "All Parcels");
+        window.setVisible(true);
+        String parcelID = window.getParcelID();
+        if (parcelID == null || parcelID.length() == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No Parcel ID given.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            searchParcel(parcelID);
+        }
+    }//GEN-LAST:event_viewAllParcelsMenuItemActionPerformed
+
+    private void searchZipMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchZipMenuItemActionPerformed
+        String zipCode = JOptionPane.showInputDialog(this, "Search for:",
+                "Search for ZipCode",
+                JOptionPane.PLAIN_MESSAGE);
+        if (zipCode == null || zipCode.length() == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No Name given.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList<Integer> indices = linearZipSearch(parcels, zipCode);
+        if (!indices.isEmpty()) {
+            displayParcelWindow(parcels, indices, "Search by Name Results");
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    zipCode + " not found.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_searchZipMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1046,9 +1133,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JPanel informationPanel;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
@@ -1069,12 +1158,14 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JButton scanNewButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JMenuItem searchMenuItem;
+    private javax.swing.JMenuItem searchNameMenuItem;
     private javax.swing.JMenuItem searchZipMenuItem;
     private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTextField;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
+    private javax.swing.JMenuItem viewAllParcelsMenuItem;
     private javax.swing.JLabel zipLabel;
     private javax.swing.JTextField zipTextField;
     // End of variables declaration//GEN-END:variables
@@ -1148,5 +1239,27 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     public void writeToFile(String file) {
         ParcelCSVFileWriter writer = new ParcelCSVFileWriter(file, parcels);
         writer.writeTheFile();
+    }
+
+    /**
+     * Creates a new JDialog which displays Parcels in the parcels ArrayList 
+     * at the Indices given by the indices  ArrayList.
+     * @param parcels ArrayList of our Parcel Objects
+     * @param indices Every index of a Parcel we wish to display
+     * @param titleWindow Title of the window to be spawned
+     */
+    private void displayParcelWindow(ArrayList<Parcel> parcels, 
+            ArrayList<Integer> indices, String titleWindow) {
+        ParcelWindow window = new ParcelWindow(parcels, indices, titleWindow);
+        window.setVisible(true);
+        String parcelID = window.getParcelID();
+        if (parcelID == null || parcelID.length() == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No Parcel ID given.",
+                    "Search Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            searchParcel(parcelID);
+        }
     }
 }

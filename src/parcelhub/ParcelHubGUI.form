@@ -84,12 +84,17 @@
             <Property name="toolTipText" type="java.lang.String" value="Sort, search, scan, edit, remove, and do various things to Parcels"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="viewAllParcelsMenuItem">
               <Properties>
                 <Property name="mnemonic" type="int" value="86"/>
                 <Property name="text" type="java.lang.String" value="View All Parcels"/>
                 <Property name="toolTipText" type="java.lang.String" value="Opens a new Window with all Parcels listed for selection"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewAllParcelsMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="scanMenuItem">
               <Properties>
@@ -121,6 +126,8 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="searchMenuItem">
               <Properties>
                 <Property name="mnemonic" type="int" value="73"/>
@@ -131,12 +138,27 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="searchNameMenuItem">
+              <Properties>
+                <Property name="mnemonic" type="int" value="97"/>
+                <Property name="text" type="java.lang.String" value="Search by Name"/>
+                <Property name="toolTipText" type="java.lang.String" value="Search for a Parcel by customer name"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchNameMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="searchZipMenuItem">
               <Properties>
                 <Property name="mnemonic" type="int" value="122"/>
                 <Property name="text" type="java.lang.String" value="Search by Zip"/>
                 <Property name="toolTipText" type="java.lang.String" value="Search for a Parcel by ZipCode"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchZipMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="backMenuItem">
               <Properties>

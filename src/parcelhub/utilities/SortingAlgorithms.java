@@ -72,8 +72,32 @@ public class SortingAlgorithms {
         if (one instanceof Parcel && two instanceof Parcel) {
             Parcel oneParcel = (Parcel) one;
             Parcel twoParcel = (Parcel) two;
-            if (!oneParcel.getZip().equals(oneParcel.getZip())) {
-                return oneParcel.getZip().compareTo(oneParcel.getZip()) < 0;
+            if (!oneParcel.getZip().equals(twoParcel.getZip())) {
+                return oneParcel.getZip().compareTo(twoParcel.getZip()) < 0;
+            } else {
+                return one.compareTo(two) < 0;
+            }
+        } else {
+            System.out.println("Error sorting, objects not Parcel...");
+            System.exit(0);
+        }
+        return false;
+    }
+    
+   /**
+     * Compares object one to comparable object two and determines if 
+     * object one is lesser in the order of the sort. Compares Parcel
+     * objects by Zipcode, and then by ID if ZipCodes are equal.
+     * @param one Object to compare to two, is this object less?
+     * @param two Object to compare to one.
+     * @return true if one is less than two in their ordering.
+     */
+    public static boolean lessName(Parcel one, Parcel two) {
+        if (one instanceof Parcel && two instanceof Parcel) {
+            Parcel oneParcel = (Parcel) one;
+            Parcel twoParcel = (Parcel) two;
+            if (!oneParcel.getNameReciever().equals(twoParcel.getNameReciever())) {
+                return oneParcel.getNameReciever().compareTo(twoParcel.getNameReciever()) < 0;
             } else {
                 return one.compareTo(two) < 0;
             }
@@ -131,6 +155,20 @@ public class SortingAlgorithms {
     public static void insertionSortByZip(ArrayList<Parcel> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = i; j > 0 && lessZip(list.get(j), 
+                    list.get(j - 1)); j--) {
+                swap(list, j, j - 1);
+            }
+        }
+    }
+    
+    /**
+     * Implements a simple insertion sort to sort an ArrayList of Comparable
+     * objects. Sort by Parcel Name, then collisions by ID.
+     * @param list The ArrayList we want to sort.
+     */
+    public static void insertionSortByName(ArrayList<Parcel> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i; j > 0 && lessName(list.get(j), 
                     list.get(j - 1)); j--) {
                 swap(list, j, j - 1);
             }
