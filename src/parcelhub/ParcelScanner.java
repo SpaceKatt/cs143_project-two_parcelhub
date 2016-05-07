@@ -75,6 +75,8 @@ public class ParcelScanner extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Scan Parcel");
+        setResizable(false);
 
         informationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcel Information"));
 
@@ -166,7 +168,9 @@ public class ParcelScanner extends javax.swing.JDialog {
 
         controlPanel.setLayout(new java.awt.GridLayout(1, 2));
 
+        saveButton.setMnemonic('s');
         saveButton.setText("Save Parcel");
+        saveButton.setToolTipText("Save scanned parcel");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -174,7 +178,9 @@ public class ParcelScanner extends javax.swing.JDialog {
         });
         controlPanel.add(saveButton);
 
+        cancelButton.setMnemonic('C');
         cancelButton.setText("Cancel");
+        cancelButton.setToolTipText("Cancel scanning without adding Parcel to database");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);

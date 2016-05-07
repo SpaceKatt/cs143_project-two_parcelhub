@@ -124,6 +124,8 @@ public class ParcelEditer extends javax.swing.JDialog {
         logoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Edit Parcel");
+        setResizable(false);
 
         informationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcel Information"));
 
@@ -215,7 +217,9 @@ public class ParcelEditer extends javax.swing.JDialog {
 
         controlPanel.setLayout(new java.awt.GridLayout(1, 2));
 
+        saveButton.setMnemonic('s');
         saveButton.setText("Save Parcel");
+        saveButton.setToolTipText("Save what you have edited");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -223,7 +227,9 @@ public class ParcelEditer extends javax.swing.JDialog {
         });
         controlPanel.add(saveButton);
 
+        cancelButton.setMnemonic('c');
         cancelButton.setText("Cancel");
+        cancelButton.setToolTipText("Canel Editing");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);

@@ -41,6 +41,8 @@ public class Validation {
             "\\D{0,1}([0-9]\\d{2})(\\D*)([0-9]\\d{2})(\\D*)(\\d{4})";
     /** Regex expression for name validation. */
     public final static String NAME_PATTERN = "^\\s*([A-Z][a-z]+\\s*){2,3}$";
+    /** Regex expression for fileName validation */
+    public final static String FILE_PATTERN = "^[^*&%\\s/;\'\"<>]+$";
     
     /**
      * Check to see if input is a double type.
@@ -64,12 +66,21 @@ public class Validation {
     }
     
     /**
-     * Check to see if input is a valid Dancer Name.
+     * Check to see if input is a valid Name.
      * @param field The item we are validating as a Name.
      * @return true if input is a valid Name.
      */
     public static boolean isName(String field) {
         return field.matches(NAME_PATTERN);
+    }
+
+    /**
+     * Check to see if input is a valid File Name.
+     * @param field The item we are validating as a fileName.
+     * @return true if input is a valid fileName.
+     */
+    public static boolean isFileName(String field) {
+        return field.matches(FILE_PATTERN);
     }
     
     /**

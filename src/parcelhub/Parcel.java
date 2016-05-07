@@ -172,7 +172,7 @@ public class Parcel implements Comparable<Parcel> {
      */
     private String generateDate() {
         Date today = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yy HH:mm:ss");
         String dateNow = dateFormat.format(today);
         return dateNow;
     }

@@ -116,7 +116,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
      */
     public String generateFileName() {
         Date today = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yy");
         String dateNow = "src/parcelhub/data/" + dateFormat.format(today);
         String canidateName = dateNow;
         int additionalPart = 0;
@@ -160,6 +160,8 @@ public class DatabaseSelector extends javax.swing.JDialog {
         parcelhubLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Select a Database to Open");
+        setResizable(false);
 
         databaseList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -189,7 +191,9 @@ public class DatabaseSelector extends javax.swing.JDialog {
 
         controlPanel.setLayout(new java.awt.GridLayout(2, 1));
 
+        newButton.setMnemonic('n');
         newButton.setText("New");
+        newButton.setToolTipText("Create a new database, will be named as the current Date");
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -199,7 +203,9 @@ public class DatabaseSelector extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
+        openButton.setMnemonic('o');
         openButton.setText("Open");
+        openButton.setToolTipText("Open selected database");
         openButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openButtonActionPerformed(evt);
@@ -207,7 +213,9 @@ public class DatabaseSelector extends javax.swing.JDialog {
         });
         jPanel1.add(openButton);
 
-        exitButton.setText("Exit Application");
+        exitButton.setMnemonic('c');
+        exitButton.setText("Cancel");
+        exitButton.setToolTipText("Cancel database opening");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitButtonActionPerformed(evt);

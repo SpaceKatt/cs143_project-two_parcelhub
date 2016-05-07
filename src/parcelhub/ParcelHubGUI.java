@@ -24,9 +24,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import parcelhub.utilities.ParcelCSVFileReader;
 import parcelhub.utilities.ParcelCSVFileWriter;
+import parcelhub.utilities.PrintUtilities;
 import static parcelhub.utilities.SearchingAlgorithms.binarySearch;
 import static parcelhub.utilities.SearchingAlgorithms.linearSearch;
 import static parcelhub.utilities.SortingAlgorithms.insertionSort;
+import parcelhub.utilities.Validation;
 
 /**
  * This GUI runs our database for the Shipping Hub. It facilitates the
@@ -186,23 +188,35 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         if (parcelArrayList.size() <= 1) {
             this.backButton.setEnabled(false);
             this.nextButton.setEnabled(false);
+            this.backMenuItem.setEnabled(false);
+            this.nextMenuItem.setEnabled(false);
         } else {
             this.backButton.setEnabled(true);
             this.nextButton.setEnabled(true);
+            this.backMenuItem.setEnabled(true);
+            this.nextMenuItem.setEnabled(true);
         }
         if (parcelArrayList.isEmpty()) {
             clearParcelDisplay();
             this.removeButton.setEnabled(false);
             this.editButton.setEnabled(false);
+            this.removeMenuItem.setEnabled(false);
+            this.editMenuItem.setEnabled(false);
         } else {
             this.removeButton.setEnabled(true);
             this.editButton.setEnabled(true);
+            this.removeMenuItem.setEnabled(true);
+            this.editMenuItem.setEnabled(true);
             parcelList.setSelectedIndex(0);
         }
         if (parcels.isEmpty()) {
-            this.seachButton.setEnabled(false);
+            this.searchButton.setEnabled(false);
+            this.searchMenuItem.setEnabled(false);
+            this.searchZipMenuItem.setEnabled(false);
         } else {
-            this.seachButton.setEnabled(true);
+            this.searchButton.setEnabled(true);
+            this.searchMenuItem.setEnabled(true);
+            this.searchZipMenuItem.setEnabled(true);
         }
     }
     
@@ -274,12 +288,13 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         titlePanel = new javax.swing.JPanel();
         arrivalLabel = new javax.swing.JLabel();
         arrivalTextField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        logoLabel = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         controlPanel = new javax.swing.JPanel();
         scanNewButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
-        seachButton = new javax.swing.JButton();
+        searchButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         displayPanel = new javax.swing.JPanel();
@@ -306,14 +321,18 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         saveAsMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         printMenuItem = new javax.swing.JMenuItem();
+        printParcelMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         actionMenu = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         scanMenuItem = new javax.swing.JMenuItem();
         removeMenuItem = new javax.swing.JMenuItem();
         editMenuItem = new javax.swing.JMenuItem();
         searchMenuItem = new javax.swing.JMenuItem();
         searchZipMenuItem = new javax.swing.JMenuItem();
+        backMenuItem = new javax.swing.JMenuItem();
+        nextMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -322,37 +341,46 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parcel Hub");
+        setResizable(false);
 
         arrivalLabel.setText("Arrived at:");
 
         arrivalTextField.setEditable(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
+
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        titleLabel.setText("Parcel Hub");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
         titlePanel.setLayout(titlePanelLayout);
         titlePanelLayout.setHorizontalGroup(
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlePanelLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(11, 11, 11)
                 .addComponent(arrivalLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, Short.MAX_VALUE)
+                .addComponent(titleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         titlePanelLayout.setVerticalGroup(
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(titlePanelLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(arrivalLabel))
+                .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(titlePanelLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(titlePanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(titleLabel)
+                            .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(arrivalLabel)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -390,15 +418,15 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         });
         controlPanel.add(editButton);
 
-        seachButton.setMnemonic('h');
-        seachButton.setText("Search");
-        seachButton.setToolTipText("Search for Parcel in System");
-        seachButton.addActionListener(new java.awt.event.ActionListener() {
+        searchButton.setMnemonic('h');
+        searchButton.setText("Search");
+        searchButton.setToolTipText("Search for Parcel in System");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seachButtonActionPerformed(evt);
+                searchButtonActionPerformed(evt);
             }
         });
-        controlPanel.add(seachButton);
+        controlPanel.add(searchButton);
 
         backButton.setMnemonic('B');
         backButton.setText("< Back");
@@ -513,7 +541,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(zipLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(zipTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)))))
+                                .addComponent(zipTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         informationPanelLayout.setVerticalGroup(
@@ -539,7 +567,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                     .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(zipLabel)
                     .addComponent(zipTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         byStatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcels By State"));
@@ -570,7 +598,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(byStatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(parcelScrollPanel)
-                    .addComponent(stateComboBox, 0, 284, Short.MAX_VALUE))
+                    .addComponent(stateComboBox, 0, 269, Short.MAX_VALUE))
                 .addContainerGap())
         );
         byStatePanelLayout.setVerticalGroup(
@@ -589,7 +617,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             .addGroup(displayPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(informationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(byStatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -599,7 +627,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(byStatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(informationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(informationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         getContentPane().add(displayPanel, java.awt.BorderLayout.CENTER);
@@ -611,21 +639,53 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Open Database");
         openMenuItem.setToolTipText("Open a different database");
+        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(openMenuItem);
 
         saveAsMenuItem.setMnemonic('v');
         saveAsMenuItem.setText("Save As...");
         saveAsMenuItem.setToolTipText("Save Database under a new name");
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(saveAsMenuItem);
         fileMenu.add(jSeparator2);
 
         printMenuItem.setMnemonic('i');
         printMenuItem.setText("Print");
         printMenuItem.setToolTipText("Print the entire GUI");
+        printMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(printMenuItem);
+
+        printParcelMenuItem.setMnemonic('l');
+        printParcelMenuItem.setText("Print Parcel");
+        printParcelMenuItem.setToolTipText("Print the information of a single Parcel");
+        printParcelMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printParcelMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(printParcelMenuItem);
         fileMenu.add(jSeparator1);
 
+        exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
+        exitMenuItem.setToolTipText("Exit the Application");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(exitMenuItem);
 
         parcelMenuBar.add(fileMenu);
@@ -634,30 +694,75 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         actionMenu.setText("Action");
         actionMenu.setToolTipText("Sort, search, scan, edit, remove, and do various things to Parcels");
 
+        jMenuItem3.setMnemonic('V');
+        jMenuItem3.setText("View All Parcels");
+        jMenuItem3.setToolTipText("Opens a new Window with all Parcels listed for selection");
+        actionMenu.add(jMenuItem3);
+
         scanMenuItem.setMnemonic('w');
         scanMenuItem.setText("Scan New");
         scanMenuItem.setToolTipText("Scan a new Parcel");
+        scanMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scanMenuItemActionPerformed(evt);
+            }
+        });
         actionMenu.add(scanMenuItem);
 
-        removeMenuItem.setMnemonic('o');
+        removeMenuItem.setMnemonic('r');
         removeMenuItem.setText("Remove");
         removeMenuItem.setToolTipText("Remove a Parcel");
+        removeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeMenuItemActionPerformed(evt);
+            }
+        });
         actionMenu.add(removeMenuItem);
 
-        editMenuItem.setMnemonic('n');
+        editMenuItem.setMnemonic('e');
         editMenuItem.setText("Edit a Parcel");
         editMenuItem.setToolTipText("Edit the current selected Parcel");
+        editMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMenuItemActionPerformed(evt);
+            }
+        });
         actionMenu.add(editMenuItem);
 
-        searchMenuItem.setMnemonic('m');
+        searchMenuItem.setMnemonic('I');
         searchMenuItem.setText("Search by ID");
         searchMenuItem.setToolTipText("Search for a Parcel by ID");
+        searchMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchMenuItemActionPerformed(evt);
+            }
+        });
         actionMenu.add(searchMenuItem);
 
-        searchZipMenuItem.setMnemonic('m');
+        searchZipMenuItem.setMnemonic('z');
         searchZipMenuItem.setText("Search by Zip");
         searchZipMenuItem.setToolTipText("Search for a Parcel by ZipCode");
         actionMenu.add(searchZipMenuItem);
+
+        backMenuItem.setMnemonic('b');
+        backMenuItem.setText("Back");
+        backMenuItem.setToolTipText("View previous Parcel");
+        backMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backMenuItemActionPerformed(evt);
+            }
+        });
+        actionMenu.add(backMenuItem);
+
+        nextMenuItem.setMnemonic('n');
+        nextMenuItem.setText("Next");
+        nextMenuItem.setToolTipText("View next Parcel");
+        nextMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextMenuItemActionPerformed(evt);
+            }
+        });
+        actionMenu.add(nextMenuItem);
 
         parcelMenuBar.add(actionMenu);
 
@@ -720,6 +825,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 displayParcels();
                 saveParcels();
                 searchParcel(newParcel.getParcelID());
+            } else {
+                JOptionPane.showMessageDialog(null, "Parcel not Scanned",
+                    "No Parcel Scanned",
+                    JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException nullex) {
             JOptionPane.showMessageDialog(null, "Parcel not Scanned",
@@ -734,12 +843,12 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * Initiates search for a Parcel by ID, takes input from user.
      * @param evt 
      */
-    private void seachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seachButtonActionPerformed
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String parcelID = JOptionPane.showInputDialog(this, "Search for:",
                 "Search for Parcel ID",
                 JOptionPane.PLAIN_MESSAGE);
         searchParcel(parcelID);
-    }//GEN-LAST:event_seachButtonActionPerformed
+    }//GEN-LAST:event_searchButtonActionPerformed
     
     /**
      * Removes a Parcel from our database.
@@ -796,6 +905,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 displayParcels();
                 saveParcels();
                 searchParcel(newParcel.getParcelID());
+            } else {
+                JOptionPane.showMessageDialog(null, "Parcel not Edited",
+                    "No Parcel Edited",
+                    JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException nullex) {
             JOptionPane.showMessageDialog(null, "Parcel not Scanned",
@@ -805,6 +918,76 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             parcelList.setSelectedIndex(location);
         }
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        String oldFileName = this.fileName;
+        DatabaseSelector selector = new DatabaseSelector();
+        selector.setVisible(true);
+        fileName = selector.getFileName();
+        if (fileName == null) {
+            JOptionPane.showMessageDialog(null, "No database was selected...",
+                    "Database Not Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+            this.fileName = oldFileName;
+        } else {
+            readFromFile(fileName);
+            pushToStateMap();
+            setModelForStateCombo();
+            displayFirstNonEmptyState();
+            displayParcels();
+            showParcelInformation(parcelList.getSelectedIndex());
+        }
+    }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        String newFileName = JOptionPane.showInputDialog(this, "Save as:",
+                "Enter a Valid File name",
+                JOptionPane.PLAIN_MESSAGE);
+        if (Validation.isFileName(newFileName)) {
+            this.fileName = "src/parcelhub/data/" + newFileName + ".txt";
+            saveParcels();
+        } else {
+            JOptionPane.showMessageDialog(null, "File name is invalid.",
+                    "Database Not Saved",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+
+    private void printMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuItemActionPerformed
+        PrintUtilities.printComponent(this);
+    }//GEN-LAST:event_printMenuItemActionPerformed
+
+    private void printParcelMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printParcelMenuItemActionPerformed
+        PrintUtilities.printComponent(this.informationPanel);
+    }//GEN-LAST:event_printParcelMenuItemActionPerformed
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void scanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanMenuItemActionPerformed
+        scanNewButtonActionPerformed(evt);
+    }//GEN-LAST:event_scanMenuItemActionPerformed
+
+    private void removeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMenuItemActionPerformed
+        removeButtonActionPerformed(evt);
+    }//GEN-LAST:event_removeMenuItemActionPerformed
+
+    private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
+        editButtonActionPerformed(evt);
+    }//GEN-LAST:event_editMenuItemActionPerformed
+
+    private void searchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMenuItemActionPerformed
+        searchButtonActionPerformed(evt);
+    }//GEN-LAST:event_searchMenuItemActionPerformed
+
+    private void backMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backMenuItemActionPerformed
+        backButtonActionPerformed(evt);
+    }//GEN-LAST:event_backMenuItemActionPerformed
+
+    private void nextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMenuItemActionPerformed
+        nextButtonActionPerformed(evt);
+    }//GEN-LAST:event_nextMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -849,6 +1032,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JLabel arrivalLabel;
     private javax.swing.JTextField arrivalTextField;
     private javax.swing.JButton backButton;
+    private javax.swing.JMenuItem backMenuItem;
     private javax.swing.JPanel byStatePanel;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JTextField cityTextField;
@@ -860,14 +1044,16 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel informationPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton nextButton;
+    private javax.swing.JMenuItem nextMenuItem;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel parcelIDLabel;
     private javax.swing.JTextField parcelIDTextField;
@@ -875,17 +1061,19 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar parcelMenuBar;
     private javax.swing.JScrollPane parcelScrollPanel;
     private javax.swing.JMenuItem printMenuItem;
+    private javax.swing.JMenuItem printParcelMenuItem;
     private javax.swing.JButton removeButton;
     private javax.swing.JMenuItem removeMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem scanMenuItem;
     private javax.swing.JButton scanNewButton;
-    private javax.swing.JButton seachButton;
+    private javax.swing.JButton searchButton;
     private javax.swing.JMenuItem searchMenuItem;
     private javax.swing.JMenuItem searchZipMenuItem;
     private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTextField;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JLabel zipLabel;
     private javax.swing.JTextField zipTextField;
