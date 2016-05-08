@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import parcelhub.Parcel;
+import parcelhub.objects.Parcel;
 import static parcelhub.utilities.SortingAlgorithms.insertionSort;
 
 /**

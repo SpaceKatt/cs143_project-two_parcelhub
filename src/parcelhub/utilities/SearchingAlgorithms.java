@@ -17,7 +17,7 @@
 package parcelhub.utilities;
 
 import java.util.ArrayList;
-import parcelhub.Parcel;
+import parcelhub.objects.Parcel;
 
 
 /**

@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package parcelhub;
+package parcelhub.gui_dialogs;
 
+import parcelhub.objects.Parcel;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;

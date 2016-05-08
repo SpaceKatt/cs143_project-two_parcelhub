@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package parcelhub;
+package parcelhub.objects;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import parcelhub.ParcelHubGUI;
 
 /**
  * This class represents a parcel that will be arriving and scanned at

@@ -16,6 +16,11 @@
  */
 package parcelhub;
 
+import parcelhub.gui_dialogs.ParcelEditer;
+import parcelhub.gui_dialogs.DatabaseSelector;
+import parcelhub.gui_dialogs.ParcelWindow;
+import parcelhub.gui_dialogs.ParcelScanner;
+import parcelhub.objects.Parcel;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
