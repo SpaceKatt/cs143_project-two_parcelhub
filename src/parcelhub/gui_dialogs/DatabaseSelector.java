@@ -168,6 +168,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        databaseList.setToolTipText("The current extant databases");
         jScrollPane1.setViewportView(databaseList);
 
         javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);

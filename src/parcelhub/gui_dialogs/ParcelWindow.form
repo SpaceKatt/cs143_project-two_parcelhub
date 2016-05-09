@@ -71,6 +71,7 @@
                     <StringItem index="4" value="Item 5"/>
                   </StringArray>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="The Parcels currently being displayed"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -101,7 +102,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="selectButton">
               <Properties>
-                <Property name="mnemonic" type="int" value="111"/>
+                <Property name="mnemonic" type="int" value="115"/>
                 <Property name="text" type="java.lang.String" value="Select"/>
                 <Property name="toolTipText" type="java.lang.String" value="Open selected database"/>
               </Properties>

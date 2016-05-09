@@ -72,25 +72,27 @@ public class ParcelEditer extends javax.swing.JDialog {
                                           "Incomplete Form",
                                           JOptionPane.ERROR_MESSAGE);
             return false;
-//        } else if (!Validation.isAddress(address)) {
-//            JOptionPane.showMessageDialog(this,
-//                                          "Must enter a valid address.",
-//                                          "Incomplete Form",
-//                                          JOptionPane.ERROR_MESSAGE);
-//            
-//            return false;
-//        } else if (!Validation.isCity(city)) {
-//            JOptionPane.showMessageDialog(this,
-//                                          "Must enter a valid city.",
-//                                          "Incomplete Form",
-//                                          JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        } else if (!Validation.isZip(city)) {
-//            JOptionPane.showMessageDialog(this,
-//                                          "Must enter a valid ZipCode.",
-//                                          "Incomplete Form",
-//                                          JOptionPane.ERROR_MESSAGE);
-//            return false;
+        } else if (!Validation.isAddress(address)) {
+            JOptionPane.showMessageDialog(this,
+                                          "Must enter a valid address.",
+                                          "Incomplete Form",
+                                          JOptionPane.ERROR_MESSAGE);
+            
+            return false;
+        } else if (!Validation.isCity(city)) {
+            JOptionPane.showMessageDialog(this,
+                                          "Must enter a valid city.\n\n"
+                                        + "Did you remember to Capatalize?",
+                                          "Incomplete Form",
+                                          JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (!Validation.isZip(zip)) {
+            JOptionPane.showMessageDialog(this,
+                                          "Must enter a valid ZipCode.\n\n"
+                                        + "XXXXX or XXXXX-XXXX",
+                                          "Incomplete Form",
+                                          JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         
         
@@ -136,12 +138,14 @@ public class ParcelEditer extends javax.swing.JDialog {
 
         cityLabel.setText("City:");
 
+        nameTextField.setToolTipText("The name of the recipient of the Parcel currently being Edited");
         nameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTextFieldActionPerformed(evt);
             }
         });
 
+        addressTextField.setToolTipText("The street address of the recipient of the Parcel currently being Edited");
         addressTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressTextFieldActionPerformed(evt);
@@ -150,6 +154,7 @@ public class ParcelEditer extends javax.swing.JDialog {
 
         stateLabel.setText("State:");
 
+        cityTextField.setToolTipText("The City of the recipient of the Parcel currently being Edited");
         cityTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cityTextFieldActionPerformed(evt);
@@ -158,6 +163,7 @@ public class ParcelEditer extends javax.swing.JDialog {
 
         zipLabel.setText("Zip:");
 
+        zipTextField.setToolTipText("The ZipCode of the recipient of the Parcel currently being Edited");
         zipTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 zipTextFieldActionPerformed(evt);
@@ -165,6 +171,7 @@ public class ParcelEditer extends javax.swing.JDialog {
         });
 
         stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        stateComboBox.setToolTipText("The state of the recipient of the Parcel currently being Edited");
 
         javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
         informationPanel.setLayout(informationPanelLayout);

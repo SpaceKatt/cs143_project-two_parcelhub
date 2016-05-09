@@ -41,8 +41,15 @@ public class Validation {
             "\\D{0,1}([0-9]\\d{2})(\\D*)([0-9]\\d{2})(\\D*)(\\d{4})";
     /** Regex expression for name validation. */
     public final static String NAME_PATTERN = "^\\s*([A-Z][a-z]+\\s*){2,3}$";
+        /** Regex expression for name validation. */
+    public final static String CITY_PATTERN = "^\\s*([A-Z][a-z]+\\s*){1,3}$";
     /** Regex expression for fileName validation */
     public final static String FILE_PATTERN = "^[^*&%\\s/;\'\"<>]+$";
+    /** Regex expression for street address validation. */
+    public final static String ADDRESS_PATTERN = 
+            "\\w+(\\s\\w+){2,}";
+    /** Regex expression for Zip Code validation. */
+    public final static String ZIP_PATTERN = "^\\d{5}(?:[-\\s]\\d{4})?$";
     
     /**
      * Check to see if input is a double type.
@@ -73,6 +80,24 @@ public class Validation {
     public static boolean isName(String field) {
         return field.matches(NAME_PATTERN);
     }
+    
+    /**
+     * Check to see if input is a valid ZipCode.
+     * @param field The item we are validating as a ZipCode.
+     * @return true if input is a valid ZipCode.
+     */
+    public static boolean isZip(String field) {
+        return field.matches(ZIP_PATTERN);
+    }
+    
+    /**
+     * Check to see if input is a valid City.
+     * @param field The item we are validating as a City.
+     * @return true if input is a valid City.
+     */
+    public static boolean isCity(String field) {
+        return field.matches(CITY_PATTERN);
+    }
 
     /**
      * Check to see if input is a valid File Name.
@@ -90,5 +115,14 @@ public class Validation {
      */
     public static boolean isEmail(String field) {
         return field.matches(EMAIL_PATTERN);
+    }
+    
+    /**
+     * Check to see if input is a valid Address.
+     * @param field The item we are validating as a Address.
+     * @return true if input is a valid Address.
+     */
+    public static boolean isAddress(String field) {
+        return field.matches(ADDRESS_PATTERN);
     }
 }

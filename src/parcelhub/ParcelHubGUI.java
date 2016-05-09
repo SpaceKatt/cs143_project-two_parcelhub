@@ -27,6 +27,7 @@ import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import parcelhub.gui_dialogs.AboutForm;
 import parcelhub.utilities.ParcelCSVFileReader;
 import parcelhub.utilities.ParcelCSVFileWriter;
 import parcelhub.utilities.PrintUtilities;
@@ -345,6 +346,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         backMenuItem = new javax.swing.JMenuItem();
         nextMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
+        aboutMenuItem = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -357,6 +359,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         arrivalLabel.setText("Arrived at:");
 
         arrivalTextField.setEditable(false);
+        arrivalTextField.setToolTipText("The date at which this Parcel was Scanned");
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
 
@@ -473,6 +476,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         parcelIDTextField.setEditable(false);
         parcelIDTextField.setText("\n");
+        parcelIDTextField.setToolTipText("The generated ID of the Parcel being displayed");
         parcelIDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 parcelIDTextFieldActionPerformed(evt);
@@ -481,6 +485,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         nameTextField.setEditable(false);
         nameTextField.setText("\n");
+        nameTextField.setToolTipText("The name of the recipient of the Parcel being displayed");
         nameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTextFieldActionPerformed(evt);
@@ -489,6 +494,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         addressTextField.setEditable(false);
         addressTextField.setText("\n");
+        addressTextField.setToolTipText("The address of the recipient of the Parcel being displayed");
         addressTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressTextFieldActionPerformed(evt);
@@ -497,6 +503,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         stateTextField.setEditable(false);
         stateTextField.setText("\n");
+        stateTextField.setToolTipText("The state of the recipient of the Parcel being displayed");
         stateTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stateTextFieldActionPerformed(evt);
@@ -507,6 +514,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         cityTextField.setEditable(false);
         cityTextField.setText("\n");
+        cityTextField.setToolTipText("The City of the recipient of the Parcel being displayed");
         cityTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cityTextFieldActionPerformed(evt);
@@ -517,6 +525,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         zipTextField.setEditable(false);
         zipTextField.setText("\n");
+        zipTextField.setToolTipText("The ZipCode of the recipient of the Parcel being displayed");
         zipTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 zipTextFieldActionPerformed(evt);
@@ -583,6 +592,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         byStatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcels By State"));
 
+        stateComboBox.setToolTipText("The abbreviation of the current State");
         stateComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 stateComboBoxItemStateChanged(evt);
@@ -594,6 +604,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        parcelList.setToolTipText("Parcels that belong to the state given by the ComboBox above");
         parcelList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 parcelListValueChanged(evt);
@@ -803,6 +814,17 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         helpMenu.setMnemonic('p');
         helpMenu.setText("Help");
         helpMenu.setToolTipText("We are here to help");
+
+        aboutMenuItem.setMnemonic('a');
+        aboutMenuItem.setText("About");
+        aboutMenuItem.setToolTipText("About this project");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
+        helpMenu.add(aboutMenuItem);
+
         parcelMenuBar.add(helpMenu);
 
         setJMenuBar(parcelMenuBar);
@@ -1065,14 +1087,14 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 JOptionPane.PLAIN_MESSAGE);
         if (zipCode == null || zipCode.length() == 0) {
             JOptionPane.showMessageDialog(this,
-                    "No Name given.",
+                    "No ZipCode given.",
                     "Search Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         ArrayList<Integer> indices = linearZipSearch(parcels, zipCode);
         if (!indices.isEmpty()) {
-            displayParcelWindow(parcels, indices, "Search by Name Results");
+            displayParcelWindow(parcels, indices, "Search by ZipCode Results");
         } else {
             JOptionPane.showMessageDialog(this,
                     zipCode + " not found.",
@@ -1080,6 +1102,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_searchZipMenuItemActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        AboutForm about = new AboutForm();
+        about.setVisible(true);
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1111,6 +1138,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ParcelHubGUI().setVisible(true);
             }
@@ -1118,6 +1146,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenu actionMenu;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JTextField addressTextField;

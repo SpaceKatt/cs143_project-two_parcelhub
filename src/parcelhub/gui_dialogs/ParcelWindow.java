@@ -150,6 +150,7 @@ public class ParcelWindow extends javax.swing.JDialog {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        parcelList.setToolTipText("The Parcels currently being displayed");
         jScrollPane1.setViewportView(parcelList);
 
         javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
@@ -175,7 +176,7 @@ public class ParcelWindow extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
-        selectButton.setMnemonic('o');
+        selectButton.setMnemonic('s');
         selectButton.setText("Select");
         selectButton.setToolTipText("Open selected database");
         selectButton.addActionListener(new java.awt.event.ActionListener() {
