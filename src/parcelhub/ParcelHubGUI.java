@@ -47,7 +47,7 @@ import parcelhub.utilities.Validation;
  * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
  * Course: CS 143 
  * Created on May 2, 2016, 5:06:21 PM 
- * Revised on May 2, 2016,
+ * Revised on May 9, 2016, 
  *
  * @author thomas.kercheval
  */
@@ -72,16 +72,28 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         "VI", "VT", "WA", "WI", "WV", "WY"};
     /** The relative path of our Parcel database. */
     public static final String FILE_NAME = "src/parcelhub/data/Parcels.txt";
+    /** The index of the Parcel ID while reading from a CSV file. */
     public static final int ID_INDEX = 0;
+    /** The index of the Customer Name while reading from a CSV file. */
     public static final int NAME_INDEX = 1;
+    /** The index of the Customer's Address while reading from a CSV file. */
     public static final int ADDRESS_INDEX = 2;
+    /** The index of the Customer's City while reading from a CSV file. */
     public static final int CITY_INDEX = 3;
+    /** The index of the Customer's State while reading from a CSV file. */
     public static final int STATE_INDEX = 4;
+    /** The index of the Customer's ZipCode while reading from a CSV file. */
     public static final int ZIP_INDEX = 5;
+    /** The index of the Parcel scanning Date while reading from a CSV file. */
     public static final int DATE_INDEX = 6;
 
     /**
-     * Creates new form ParcelHubGUI
+     * Creates new form ParcelHubGUI. Selects the Database to read from,
+     * initializes the ArrayLists, one to hold all of the Parcels, and one
+     * for every state to hold the Parcels that are being sent there. It finds
+     * all states where there are Parcels headed and sets the stateComboBox 
+     * model to list those states. If there are no Parcels in the database,
+     * we alert the user and display an empty Washington State.
      */
     public ParcelHubGUI() {
         DatabaseSelector selector = new DatabaseSelector();
@@ -101,7 +113,6 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         parcels = new ArrayList<>();
         stateMap = createStateMap();
         readFromFile(fileName);
-//        fileName = FILE_NAME;
         pushToStateMap();
         
         setModelForStateCombo();
@@ -110,6 +121,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         showParcelInformation(parcelList.getSelectedIndex());
     }
     
+    /**
+     * Cycles through every possible state and adds the ones which have Parcels
+     * affiliated with them to the stateComboBox to be displayed. If there are
+     * no Parcels we display Washington State and alert the User.
+     */
     private void setModelForStateCombo() {
         ArrayList<String> filledStates = new ArrayList<>();
         for (String state : STATE_ABBV) {
@@ -132,8 +148,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     
     /**
      * This method finds the first state, alphabetically, that has Parcels
-     * being delivered to it.
-     * @return The index of the first alphabetically nonempty state.
+     * being delivered to it. 
+     * 
+     * # NOTE: This method may not be necessary due to the after added 
+     * setModelForStateCombo() method. This is so because to non-empty states
+     * are displayed to begin with.
      */
     private void displayFirstNonEmptyState() {
         String state = (String) stateComboBox.getSelectedItem();
@@ -168,7 +187,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * to the ArrayLists attached to States in the HashMap.
      */
     private void pushToStateMap() {
-        for (String state: this.STATE_ABBV) {
+        for (String state: ParcelHubGUI.STATE_ABBV) {
             ArrayList<Parcel> list = (ArrayList<Parcel>) stateMap.get(state);
             list.clear();
         }
@@ -181,7 +200,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     }
     
     /** 
-     * Displays Parcels depending upon which state is currently selected.
+     * Displays Parcels in the parcelList display component depending upon 
+     * which state is currently selected. This is also where buttons are
+     * enabled/disabled depending on how many Parcels are currently being
+     * Displayed.
      */
     private void displayParcels() {
         String state = (String) stateComboBox.getSelectedItem();
@@ -231,21 +253,24 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     /** This method clears the displayed Parcel information TextFields. */
     private void clearParcelDisplay() {
         nameTextField.setText("");
-            addressTextField.setText("");
-            parcelIDTextField.setText("");
-            arrivalTextField.setText("");
-            stateTextField.setText("");
-            zipTextField.setText("");
-            cityTextField.setText("");
+        addressTextField.setText("");
+        parcelIDTextField.setText("");
+        arrivalTextField.setText("");
+        stateTextField.setText("");
+        zipTextField.setText("");
+        cityTextField.setText("");
     }
     
     /**
      * Displays all Parcel Information for the selected Parcel.
-     * @param index 
+     * @param index The index of the Parcel in the parcelList display.
      */
     private void showParcelInformation(int index) {
         String state = (String) stateComboBox.getSelectedItem();
-        if (index != -1) {
+        if (index != -1) { // Double cast is necessary because the ArrayList
+                           // is stored as an Object in the HashMap stateMap
+                           // and then the Casted ArrayList can't infer the
+                           // type of its contents.
             Parcel parcel = (Parcel)((ArrayList)stateMap.get(state)).get(index);
             nameTextField.setText(parcel.getNameReciever());
             addressTextField.setText(parcel.getAddress());
@@ -274,6 +299,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * This method sorts every ArrayList in this application by ID.
+     * @see parcelhub.utilities.SortingAlgorithms.insertionSort
      */
     private void sortAllArrayLists() {
         insertionSort(parcels);
@@ -327,6 +353,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
+        clearMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         printMenuItem = new javax.swing.JMenuItem();
         printParcelMenuItem = new javax.swing.JMenuItem();
@@ -390,11 +417,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                         .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(titlePanelLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(titleLabel)
+                        .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(arrivalLabel)))))
+                                .addComponent(arrivalLabel))
+                            .addComponent(titleLabel))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -677,6 +704,16 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             }
         });
         fileMenu.add(saveAsMenuItem);
+
+        clearMenuItem.setMnemonic('c');
+        clearMenuItem.setText("Clear");
+        clearMenuItem.setToolTipText("Clears the Parcel Information display component");
+        clearMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(clearMenuItem);
         fileMenu.add(jSeparator2);
 
         printMenuItem.setMnemonic('i');
@@ -856,10 +893,19 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_zipTextFieldActionPerformed
 
+    /**
+     * This method Listens to see if the value in parcelList has changed, and
+     * upon hearing an event it updates which Parcel has its information 
+     * displayed.
+     * @param evt 
+     */
     private void parcelListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_parcelListValueChanged
         showParcelInformation(parcelList.getSelectedIndex());
     }//GEN-LAST:event_parcelListValueChanged
 
+    /** 
+     * Displays the Parcels for the State which was selected in stateComboBox. 
+     */
     private void stateComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stateComboBoxItemStateChanged
         displayParcels();
     }//GEN-LAST:event_stateComboBoxItemStateChanged
@@ -912,7 +958,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      */
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         int reply = JOptionPane.showConfirmDialog(this, "Are you sure?",
-                "Confirm Dancer deletion...",
+                "Confirm Parcel deletion...",
                 JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (reply == JOptionPane.YES_OPTION) {
             String parcelID = this.parcelList.getSelectedValue();
@@ -931,6 +977,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
+    /** Displays the next Parcel in parcelList. */
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         int currentIndex = this.parcelList.getSelectedIndex();
         int listSize = this.parcelList.getModel().getSize();
@@ -938,6 +985,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         this.parcelList.setSelectedIndex(nextIndex);
     }//GEN-LAST:event_nextButtonActionPerformed
 
+    /** Displays the previous Parcel in parcelList. */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         int currentIndex = this.parcelList.getSelectedIndex();
         int listSize = this.parcelList.getModel().getSize();
@@ -945,6 +993,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         this.parcelList.setSelectedIndex(nextIndex);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /** 
+     * Launches the form in which the User may edit the currently selected 
+     * Parcel. 
+     */
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int location = this.parcelList.getSelectedIndex();
         String parcelID = this.parcelList.getSelectedValue();
@@ -975,6 +1027,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
+    /** 
+     * Allows the User to open a different database and work with a different
+     * set of Parcels.
+     * @param evt 
+     */
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         String oldFileName = this.fileName;
         DatabaseSelector selector = new DatabaseSelector();
@@ -995,6 +1052,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
 
+    /**
+     * Allows the user to save the current database under a new name. Does
+     * not delete the old file, and will only save under the new name.
+     * @param evt 
+     */
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
         String newFileName = JOptionPane.showInputDialog(this, "Save as:",
                 "Enter a Valid File name",
@@ -1009,42 +1071,66 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
 
+    /**
+     * Prints the entire GUI.
+     * @param evt 
+     */
     private void printMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuItemActionPerformed
         PrintUtilities.printComponent(this);
     }//GEN-LAST:event_printMenuItemActionPerformed
 
+    /**
+     * Prints a single Parcel.
+     * @param evt 
+     */
     private void printParcelMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printParcelMenuItemActionPerformed
         PrintUtilities.printComponent(this.informationPanel);
     }//GEN-LAST:event_printParcelMenuItemActionPerformed
 
+    /**
+     * Exits the application.
+     * @param evt 
+     */
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    /** Scans a Parcel by calling the corresponding button listener. */
     private void scanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanMenuItemActionPerformed
         scanNewButtonActionPerformed(evt);
     }//GEN-LAST:event_scanMenuItemActionPerformed
 
+    /** Removes a Parcel by calling the corresponding button listener. */
     private void removeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMenuItemActionPerformed
         removeButtonActionPerformed(evt);
     }//GEN-LAST:event_removeMenuItemActionPerformed
 
+    /** Edits a Parcel by calling the corresponding button listener. */
     private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
         editButtonActionPerformed(evt);
     }//GEN-LAST:event_editMenuItemActionPerformed
 
+    /** Searches for a Parcel by calling the corresponding button listener. */
     private void searchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMenuItemActionPerformed
         searchButtonActionPerformed(evt);
     }//GEN-LAST:event_searchMenuItemActionPerformed
 
+    /** Selects previous Parcel by calling corresponding button listener. */
     private void backMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backMenuItemActionPerformed
         backButtonActionPerformed(evt);
     }//GEN-LAST:event_backMenuItemActionPerformed
 
+    /** Selects next Parcel by calling corresponding button listener. */
     private void nextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMenuItemActionPerformed
         nextButtonActionPerformed(evt);
     }//GEN-LAST:event_nextMenuItemActionPerformed
 
+    /**
+     * Searches for all instances of where a Parcel Customer name contains
+     * our search key, then spawns a new Dialog where the user may select
+     * a Parcel out of all search return results.
+     * @param evt 
+     */
     private void searchNameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNameMenuItemActionPerformed
         String customerName = JOptionPane.showInputDialog(this, "Search for:",
                 "Search for Name",
@@ -1067,6 +1153,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchNameMenuItemActionPerformed
 
+    /**
+     * Spawns a new Dialog which lists all the Parcels in parcels ArrayList.
+     * @param evt 
+     */
     private void viewAllParcelsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllParcelsMenuItemActionPerformed
         ParcelWindow window = new ParcelWindow(parcels, "All Parcels");
         window.setVisible(true);
@@ -1081,6 +1171,12 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_viewAllParcelsMenuItemActionPerformed
 
+    /**
+     * Searches for all instances of where a Parcel Customer ZipCode contains
+     * our search key, then spawns a new Dialog where the user may select
+     * a Parcel out of all search return results.
+     * @param evt 
+     */
     private void searchZipMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchZipMenuItemActionPerformed
         String zipCode = JOptionPane.showInputDialog(this, "Search for:",
                 "Search for ZipCode",
@@ -1103,12 +1199,22 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchZipMenuItemActionPerformed
 
+    /** Spawns the About Form. */
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         AboutForm about = new AboutForm();
         about.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    /** 
+     * Clears the displayed Parcel information. If this wasn't included
+     * in the project rubric I wouldn't have included it in this application.
+     */
+    private void clearMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearMenuItemActionPerformed
+        clearParcelDisplay();
+    }//GEN-LAST:event_clearMenuItemActionPerformed
+
     /**
+     * Starts our GUI.
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -1157,6 +1263,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     private javax.swing.JPanel byStatePanel;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JTextField cityTextField;
+    private javax.swing.JMenuItem clearMenuItem;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JButton editButton;
@@ -1246,7 +1353,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * Saves our Parcels to a text file that is named based on the 
-     * current date. The file is saved in `src.parcelhub.data`.
+     * current date. The file it is saved in is selected by the User.
      */
     private void saveParcels() {
         setModelForStateCombo();
