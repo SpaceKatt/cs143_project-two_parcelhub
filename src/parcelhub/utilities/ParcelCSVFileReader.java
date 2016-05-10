@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
  * Course: CS 143 
  * Created on May 2, 2016, 6:05:21 PM 
- * Revised on May 2, 2016,
+ * Revised on May 6, 2016, 1:44:33 PM
  *
  * @author thomas.kercheval
  */

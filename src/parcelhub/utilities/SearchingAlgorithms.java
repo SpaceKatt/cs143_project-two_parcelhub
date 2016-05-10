@@ -28,7 +28,7 @@ import parcelhub.objects.Parcel;
  * Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
  * Course: CS 143
  * Created on Apr 28, 2016, 2:03:54 PM
- * Revised on Arp 21, 2016,  PM
+ * Revised on May 9, 2016, 5:28:31 PM
  * 
  * @author thomas.kercheval
  */

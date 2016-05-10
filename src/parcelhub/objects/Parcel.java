@@ -34,14 +34,11 @@ import parcelhub.ParcelHubGUI;
  * Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
  * Course: CS 143
  * Created on Apr 21, 2016, 1:47:31 PM
- * Revised on Arp 21, 2016, 2:45:11 PM
+ * Revised on May 8, 2016, 1:51:11 PM
  * 
  * @author thomas.kercheval
  */
 public class Parcel implements Comparable<Parcel> {
-    /** The number of Parcels scanned by this hub. */
-    //private static int numberOfParcels;
-    
     /** The unique ID of the Parcel. */
     private final String parcelID;
     /** The Person the Parcel will be sent to. */

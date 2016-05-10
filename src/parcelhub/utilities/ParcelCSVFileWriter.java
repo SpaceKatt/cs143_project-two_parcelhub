@@ -31,11 +31,11 @@ import static parcelhub.utilities.SortingAlgorithms.insertionSort;
  * ParcelCSVFileWriter.java
  * This class provides an abstraction to write our database one line at a time.
  * <pre>
-    Project: CafeDansa Database
+    Project: Parcel Hub Database
     Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
     Course: CS 143
     Created on May 5, 2016, 2:11:46 PM
-    Revised on May 5, 2016, 7:13:53 PM
+    Revised on May 6, 2016, 7:13:53 PM
  </pre>
  * @author Thomas Kercheval
  */
