@@ -19,13 +19,20 @@ package parcelhub.gui_dialogs;
 import java.awt.Toolkit;
 
 /**
+ * The About form for this project.
  *
- * @author Thomas
+ * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
+ * Course: CS 143 
+ * Created on May 8, 2016, 4:06:51 PM 
+ * Revised on May 9, 2016, 5:03:12 PM
+ *
+ * @author thomas.kercheval
  */
 public class AboutForm extends javax.swing.JDialog {
 
     /**
-     * Creates new form AboutForm
+     * Creates new form AboutForm. Sets modal, sets icon, and sets caret
+     * position to start at beginning of the text box.
      */
     public AboutForm() {
         initComponents();
@@ -147,6 +154,10 @@ public class AboutForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Closes the About form and returns to main GUI.
+     * @param evt 
+     */
     private void closeJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeJButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeJButtonActionPerformed

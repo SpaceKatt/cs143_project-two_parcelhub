@@ -25,8 +25,18 @@ import static parcelhub.utilities.SortingAlgorithms.insertionSortByName;
 import static parcelhub.utilities.SortingAlgorithms.insertionSortByZip;
 
 /**
+ * Displays all the Parcels which are fed to the Constructor in an ArrayList.
+ * Since this window is used to display all the Parcels in our database and all
+ * searches which produce duplicate results, the title of this Dialog is also
+ * provided to the constructor. Once the Focus returns to the main GUI the
+ * Parcel selected in this window is searched for and displayed.
  *
- * @author Thomas
+ * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
+ * Course: CS 143 
+ * Created on May 7, 2016, 2:54:37 PM 
+ * Revised on May 9, 2016, 5:15:43 PM
+ *
+ * @author thomas.kercheval
  */
 public class ParcelWindow extends javax.swing.JDialog {
     /** ArrayList of Parcels to display */
@@ -35,10 +45,11 @@ public class ParcelWindow extends javax.swing.JDialog {
     private String parcelID;
     
     /**
-     * 
+     * Constructs the Dialog, populates the lists with the items in `parcels`
+     * at the indices specified in the ArrayList `indices`.
      * @param parcels The ArrayList of all extant Parcels
      * @param indices The indices in ArrayList parcels that we wish to display
-     * @param titleWindow 
+     * @param titleWindow The title of this Dialog.
      */
     public ParcelWindow(ArrayList<Parcel> parcels, 
             ArrayList<Integer> indices, String titleWindow) {
@@ -55,7 +66,7 @@ public class ParcelWindow extends javax.swing.JDialog {
     }
     
    /**
-     * 
+     * Constructs the Dialog, populates the lists with the items in `parcels`.
      * @param parcels The ArrayList of all extant Parcels
      * @param titleWindow 
      */
@@ -88,6 +99,10 @@ public class ParcelWindow extends javax.swing.JDialog {
         this.parcelList.setSelectedIndex(0);
     }
     
+    /**
+     * Looks at which sorting method is currently selected by the sorting
+     * Radio Buttons and performs the corresponding sort.
+     */
     private void sortParcels() {
         if (this.sortIDRadioButton.isSelected()) {
             insertionSort(displayParcels);
@@ -241,24 +256,37 @@ public class ParcelWindow extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Saves the selected ParcelID and closes this window, the main GUI uses
+     * this ParcelID to search and display the Parcel selected here.
+     * @param evt 
+     */
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         parcelID = this.parcelList.getSelectedValue().substring(0, 32);
         this.dispose();
     }//GEN-LAST:event_selectButtonActionPerformed
 
+    /**
+     * Exits the Dialog and tells the GUI to cancel by setting ParcelID to 
+     * null.
+     * @param evt 
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         parcelID = null;
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    /** Calls sortParcels() to sort the Parcels accordingly. */
     private void sortZipRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortZipRadioButtonActionPerformed
         sortParcels();
     }//GEN-LAST:event_sortZipRadioButtonActionPerformed
 
+    /** Calls sortParcels() to sort the Parcels accordingly. */
     private void sortIDRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortIDRadioButtonActionPerformed
         sortParcels();
     }//GEN-LAST:event_sortIDRadioButtonActionPerformed
 
+    /** Calls sortParcels() to sort the Parcels accordingly. */
     private void sortNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortNameRadioButtonActionPerformed
         sortParcels();
     }//GEN-LAST:event_sortNameRadioButtonActionPerformed

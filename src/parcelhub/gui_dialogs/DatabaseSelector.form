@@ -68,7 +68,7 @@
                     <StringItem index="4" value="Item 5"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="The current extant databases"/>
+                <Property name="toolTipText" type="java.lang.String" value="The current extant databases, click to select one and press Enter"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

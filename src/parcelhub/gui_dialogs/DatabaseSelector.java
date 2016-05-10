@@ -27,8 +27,16 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
+ * A form by which the User may select which database to populate our
+ * application with. Either an existing database may be selected, or a new
+ * one may be created with the current date as its name.
  *
- * @author Thomas
+ * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
+ * Course: CS 143 
+ * Created on May 2, 2016, 2:31:21  
+ * Revised on May 9, 2016, 5:00:12
+ *
+ * @author thomas.kercheval
  */
 public class DatabaseSelector extends javax.swing.JDialog {
     ArrayList<String> databases;
@@ -168,7 +176,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        databaseList.setToolTipText("The current extant databases");
+        databaseList.setToolTipText("The current extant databases, click to select one and press Enter");
         jScrollPane1.setViewportView(databaseList);
 
         javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
@@ -262,16 +270,30 @@ public class DatabaseSelector extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Exits our application.
+     * @param evt 
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         fileName = null;
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    /**
+     * Saves the name of the currently selected database and closes the \
+     * Dialog.
+     * @param evt 
+     */
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         fileName = this.databaseList.getSelectedValue();
         this.dispose();
     }//GEN-LAST:event_openButtonActionPerformed
 
+    /**
+     * Generates a new, unique name by calling generateFileName() and closes
+     * the Dialog.
+     * @param evt 
+     */
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         fileName = generateFileName();
         File f = new File(fileName);

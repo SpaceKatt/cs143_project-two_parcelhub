@@ -24,16 +24,32 @@ import static parcelhub.ParcelHubGUI.STATE_ABBV;
 import parcelhub.utilities.Validation;
 
 /**
+ * Displays a Parcel and its information in editable text boxes, allows
+ * for the main application to get the edited Parcel, but only after it 
+ * verifies the changes the user has made. Parcel ID and Date scanned are not 
+ * included because they are designed to not be editable.
  *
- * @author Thomas
+ * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
+ * Course: CS 143 
+ * Created on May 6, 2016, 5:06:21 PM 
+ * Revised on May 9, 2016, 5:07:52 PM
+ *
+ * @author thomas.kercheval
  */
-public class ParcelEditer extends javax.swing.JDialog {
+public class ParcelEditor extends javax.swing.JDialog {
+    /**
+     * The Parcel we wish to edit. Saved as a new Parcel as to not 
+     * change the state of the original object before the changes have passed
+     * validation.
+     */
     Parcel editParcel;
     
     /**
-     * Creates new form ParcelEditer
+     * Creates new form ParcelEditer, copies the Parcel that is fed to this
+     * constructor as an instance variable, and displays its information in
+     * JTextFields.
      */
-    public ParcelEditer(Parcel parcel) {
+    public ParcelEditor(Parcel parcel) {
         initComponents();
         this.setIconImage(Toolkit.getDefaultToolkit().
                 getImage("src/parcelhub/images/238be5e.png"));
@@ -49,9 +65,9 @@ public class ParcelEditer extends javax.swing.JDialog {
     }
 
     /**
-     * Creates new form ParcelEditer
+     * Creates new form ParcelEditer. This constructor is not used.
      */
-    public ParcelEditer() {
+    public ParcelEditor() {
         initComponents();
         this.setModal(true);
         this.stateComboBox.setModel(new DefaultComboBoxModel(STATE_ABBV));
@@ -62,6 +78,16 @@ public class ParcelEditer extends javax.swing.JDialog {
         return editParcel;
     }
     
+    /** 
+     * Performs Validation by using the methods given by the Validation class,
+     * does nothing if the fields are valid, and sends the user an error 
+     * message if anything is triggered. All Validation is done using RegEx.
+     * @param name The Parcels recipient's name.
+     * @param address The Parcel's recipient's street address.
+     * @param city The Parcel's recipient's city.
+     * @param zip The Parcel's recipient's ZipCode.
+     * @return true if all fields are valid.
+     */
     private boolean validateFields(String name, String address, String city, 
             String zip) {
         if (!Validation.isName(name)) {
@@ -94,8 +120,6 @@ public class ParcelEditer extends javax.swing.JDialog {
                                           JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
-        
         return true;
     }
     
@@ -279,22 +303,29 @@ public class ParcelEditer extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /** Try to save if enter is pressed in this text field. */
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
+    /** Try to save if enter is pressed in this text field. */
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_addressTextFieldActionPerformed
 
+    /** Try to save if enter is pressed in this text field. */
     private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_cityTextFieldActionPerformed
 
+    /** Try to save if enter is pressed in this text field. */
     private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_zipTextFieldActionPerformed
 
+    /** 
+     * Save if all fields are Valid. If not all fields are valid, do nothing.
+     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String name = this.nameTextField.getText();
         String address = this.addressTextField.getText();
@@ -313,6 +344,11 @@ public class ParcelEditer extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    /**
+     * Cancels the edit by setting editParcel to be null and closing the
+     * window.
+     * @param evt 
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.editParcel = null;
         this.setVisible(false);

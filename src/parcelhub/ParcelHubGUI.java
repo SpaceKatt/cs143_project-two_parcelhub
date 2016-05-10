@@ -16,7 +16,7 @@
  */
 package parcelhub;
 
-import parcelhub.gui_dialogs.ParcelEditer;
+import parcelhub.gui_dialogs.ParcelEditor;
 import parcelhub.gui_dialogs.DatabaseSelector;
 import parcelhub.gui_dialogs.ParcelWindow;
 import parcelhub.gui_dialogs.ParcelScanner;
@@ -47,7 +47,7 @@ import parcelhub.utilities.Validation;
  * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
  * Course: CS 143 
  * Created on May 2, 2016, 5:06:21 PM 
- * Revised on May 9, 2016, 
+ * Revised on May 9, 2016, 4:59:24 PM
  *
  * @author thomas.kercheval
  */
@@ -1003,7 +1003,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         parcelID = parcelID.substring(parcelID.lastIndexOf(" ")+1);
         int index = linearSearch(parcels, parcelID);
         try {    
-            ParcelEditer editor = new ParcelEditer(parcels.get(index));
+            ParcelEditor editor = new ParcelEditor(parcels.get(index));
             editor.setLocationRelativeTo(this);
             editor.setVisible(true);
             Parcel newParcel = editor.getParcel();

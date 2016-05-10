@@ -25,6 +25,14 @@ import static parcelhub.ParcelHubGUI.STATE_ABBV;
 import parcelhub.utilities.Validation;
 
 /**
+ * Allows for a user to Scan a new Parcel. User can set everything other than
+ * ParcelID and Time of generation. Validation is performed inside of this
+ * class and user is notified if invalid fields have been provided.
+ *
+ * Project: Parcel Hub Platform: jdk 1.8.0_14; NetBeans IDE 8.1; Windows 10
+ * Course: CS 143 
+ * Created on May 5, 2016, 2:23:21 PM 
+ * Revised on May 9, 2016, 5:17:17 PM
  *
  * @author thomas.kercheval
  */
@@ -32,7 +40,7 @@ public class ParcelScanner extends javax.swing.JDialog {
     private Parcel newParcel;
 
     /**
-     * Creates new form ParcelScanner
+     * Creates new form ParcelScanner. Sets the default button to saveButton.
      */
     public ParcelScanner() {
         initComponents();
@@ -228,22 +236,29 @@ public class ParcelScanner extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /** Try to save if enter is pressed in this text field. */
     private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_zipTextFieldActionPerformed
 
+    /** Try to save if enter is pressed in this text field. */
     private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_cityTextFieldActionPerformed
 
+    /** Try to save if enter is pressed in this text field. */
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_addressTextFieldActionPerformed
 
+    /** Try to save if enter is pressed in this text field. */
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
+    /** 
+     * Save if all fields are Valid. If not all fields are valid, do nothing.
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.newParcel = null;
         this.setVisible(false);
@@ -268,6 +283,16 @@ public class ParcelScanner extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    /** 
+     * Performs Validation by using the methods given by the Validation class,
+     * does nothing if the fields are valid, and sends the user an error 
+     * message if anything is triggered. All Validation is done using RegEx.
+     * @param name The Parcels recipient's name.
+     * @param address The Parcel's recipient's street address.
+     * @param city The Parcel's recipient's city.
+     * @param zip The Parcel's recipient's ZipCode.
+     * @return true if all fields are valid.
+     */
     private boolean validateFields(String name, String address, String city, 
             String zip) {
         if (!Validation.isName(name)) {
