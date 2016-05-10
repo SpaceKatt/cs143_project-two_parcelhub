@@ -22,6 +22,7 @@ import parcelhub.gui_dialogs.ParcelWindow;
 import parcelhub.gui_dialogs.ParcelScanner;
 import parcelhub.objects.Parcel;
 import java.awt.Toolkit;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
@@ -1058,11 +1059,13 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
-        String newFileName = JOptionPane.showInputDialog(this, "Save as:",
+        String newFileNameStub = JOptionPane.showInputDialog(this, "Save as:",
                 "Enter a Valid File name",
                 JOptionPane.PLAIN_MESSAGE);
-        if (Validation.isFileName(newFileName)) {
-            this.fileName = "src/parcelhub/data/" + newFileName + ".txt";
+        String newFileName = "src/parcelhub/data/" + newFileNameStub + ".txt";
+        File newFile = new File(newFileName);
+        if (Validation.isFileName(newFileNameStub) && !newFile.exists()) {
+            this.fileName = newFileName;
             saveParcels();
         } else {
             JOptionPane.showMessageDialog(null, "File name is invalid.",
