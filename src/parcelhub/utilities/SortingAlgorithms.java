@@ -69,19 +69,11 @@ public class SortingAlgorithms {
      * @return true if one is less than two in their ordering.
      */
     public static boolean lessZip(Parcel one, Parcel two) {
-        if (one instanceof Parcel && two instanceof Parcel) {
-            Parcel oneParcel = (Parcel) one;
-            Parcel twoParcel = (Parcel) two;
-            if (!oneParcel.getZip().equals(twoParcel.getZip())) {
-                return oneParcel.getZip().compareTo(twoParcel.getZip()) < 0;
-            } else {
-                return one.compareTo(two) < 0;
-            }
+        if (!one.getZip().equals(two.getZip())) {
+            return one.getZip().compareTo(two.getZip()) < 0;
         } else {
-            System.out.println("Error sorting, objects not Parcel...");
-            System.exit(0);
+            return one.compareTo(two) < 0;
         }
-        return false;
     }
     
    /**
@@ -93,19 +85,11 @@ public class SortingAlgorithms {
      * @return true if one is less than two in their ordering.
      */
     public static boolean lessName(Parcel one, Parcel two) {
-        if (one instanceof Parcel && two instanceof Parcel) {
-            Parcel oneParcel = (Parcel) one;
-            Parcel twoParcel = (Parcel) two;
-            if (!oneParcel.getNameReciever().equals(twoParcel.getNameReciever())) {
-                return oneParcel.getNameReciever().compareTo(twoParcel.getNameReciever()) < 0;
-            } else {
-                return one.compareTo(two) < 0;
-            }
+        if (!one.getNameReciever().equals(two.getNameReciever())) {
+            return one.getNameReciever().compareTo(two.getNameReciever()) < 0;
         } else {
-            System.out.println("Error sorting, objects not Parcel...");
-            System.exit(0);
+            return one.compareTo(two) < 0;
         }
-        return false;
     }
     
         /**
@@ -117,19 +101,11 @@ public class SortingAlgorithms {
      * @return true if one is less than two in their ordering.
      */
     public static boolean lessDate(Parcel one, Parcel two) {
-        if (one instanceof Parcel && two instanceof Parcel) {
-            Parcel oneParcel = (Parcel) one;
-            Parcel twoParcel = (Parcel) two;
-            if (!oneParcel.getDate().equals(oneParcel.getDate())) {
-                return oneParcel.getDate().compareTo(oneParcel.getDate()) < 0;
-            } else {
-                return one.compareTo(two) < 0;
-            }
+        if (!one.getDate().equals(two.getDate())) {
+            return one.getDate().compareTo(two.getDate()) < 0;
         } else {
-            System.out.println("Error sorting, objects not Parcel...");
-            System.exit(0);
+            return one.compareTo(two) < 0;
         }
-        return false;
     }
     
     /**

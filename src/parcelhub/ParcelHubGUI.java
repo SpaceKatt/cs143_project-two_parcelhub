@@ -233,11 +233,15 @@ public class ParcelHubGUI extends javax.swing.JFrame {
             this.editButton.setEnabled(false);
             this.removeMenuItem.setEnabled(false);
             this.editMenuItem.setEnabled(false);
+            this.searchNameMenuItem.setEnabled(false);
+            this.viewAllParcelsMenuItem.setEnabled(false);
         } else {
             this.removeButton.setEnabled(true);
             this.editButton.setEnabled(true);
             this.removeMenuItem.setEnabled(true);
             this.editMenuItem.setEnabled(true);
+            this.searchNameMenuItem.setEnabled(true);
+            this.viewAllParcelsMenuItem.setEnabled(true);
             parcelList.setSelectedIndex(0);
         }
         if (parcels.isEmpty()) {
@@ -1062,15 +1066,26 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         String newFileNameStub = JOptionPane.showInputDialog(this, "Save as:",
                 "Enter a Valid File name",
                 JOptionPane.PLAIN_MESSAGE);
-        String newFileName = "src/parcelhub/data/" + newFileNameStub + ".txt";
-        File newFile = new File(newFileName);
-        if (Validation.isFileName(newFileNameStub) && !newFile.exists()) {
-            this.fileName = newFileName;
-            saveParcels();
-        } else {
-            JOptionPane.showMessageDialog(null, "File name is invalid.",
+        if (newFileNameStub == null) {
+            JOptionPane.showMessageDialog(null, "No file name given.",
                     "Database Not Saved",
                     JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String newFileName = "src/parcelhub/data/" + newFileNameStub 
+                                                       + ".txt";
+            File newFile = new File(newFileName);
+            if (newFile.exists()) {
+                JOptionPane.showMessageDialog(null, "Database already exists.",
+                        "Database Not Saved",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else if (Validation.isFileName(newFileNameStub)) {
+                this.fileName = newFileName;
+                saveParcels();
+            } else {
+                JOptionPane.showMessageDialog(null, "File name is invalid.",
+                        "Database Not Saved",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
 
