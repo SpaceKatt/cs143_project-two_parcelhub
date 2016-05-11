@@ -396,7 +396,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("AR JULIAN", 0, 36)); // NOI18N
         titleLabel.setText("Parcel Hub");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
@@ -410,7 +410,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -423,11 +423,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                         .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(titlePanelLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(titleLabel)
                             .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(arrivalLabel))
-                            .addComponent(titleLabel))))
+                                .addComponent(arrivalLabel)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -623,7 +623,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(byStatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(parcelScrollPanel)
-                    .addComponent(stateComboBox, 0, 269, Short.MAX_VALUE))
+                    .addComponent(stateComboBox, 0, 273, Short.MAX_VALUE))
                 .addContainerGap())
         );
         byStatePanelLayout.setVerticalGroup(

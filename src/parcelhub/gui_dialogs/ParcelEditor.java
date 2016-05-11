@@ -272,7 +272,7 @@ public class ParcelEditor extends javax.swing.JDialog {
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.SOUTH);
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("AR JULIAN", 0, 24)); // NOI18N
         titleLabel.setText("Edit a Parcel");
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N

@@ -186,7 +186,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
             displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(displayPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
         displayPanelLayout.setVerticalGroup(
@@ -240,7 +240,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
         selectLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         selectLabel.setText("Select Database");
 
-        parcelhubLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        parcelhubLabel.setFont(new java.awt.Font("AR JULIAN", 0, 48)); // NOI18N
         parcelhubLabel.setText("Parcel Hub");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);

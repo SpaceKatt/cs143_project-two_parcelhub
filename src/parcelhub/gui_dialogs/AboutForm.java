@@ -72,7 +72,7 @@ public class AboutForm extends javax.swing.JDialog {
         logoJLabel.setForeground(new java.awt.Color(51, 0, 0));
         logoJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
 
-        titleJLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        titleJLabel.setFont(new java.awt.Font("AR JULIAN", 0, 24)); // NOI18N
         titleJLabel.setForeground(new java.awt.Color(51, 0, 0));
         titleJLabel.setText("Parcel Hub Database");
 
