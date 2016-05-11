@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parcels>
+  <Parcel>
+    <parcelID>01163b0961a2259c609f6d65d16afa3b</parcelID>
+    <name>Steven Universe</name>
+    <address>2593 Oak Nut Dr</address>
+    <date>07/May/16 14:24:10</date>
+    <city>Seattle</city>
+    <state>WA</state>
+    <zip>98155</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>139b46273c4947f6e32fa7c9c3dfc3f9</parcelID>
+    <name>Boulder Heaver</name>
+    <address>999 Mountian Rd W</address>
+    <date>08/May/16 16:42:41</date>
+    <city>City Town</city>
+    <state>CO</state>
+    <zip>75364</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>219c98a8fe106b5db3141f35579441e1</parcelID>
+    <name>Utopia Lover</name>
+    <address>9 Cloud Ave SW</address>
+    <date>07/May/16 14:30:03</date>
+    <city>Mars</city>
+    <state>AZ</state>
+    <zip>31354-6547</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>245e7737571bd3c6b198d0cdf6c1414f</parcelID>
+    <name>Different Zipcode</name>
+    <address>294 SW 35th Ave</address>
+    <date>07/May/16 14:25:27</date>
+    <city>Seattle</city>
+    <state>WA</state>
+    <zip>98126</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>621baa2e2c25d84e7fddc1ffc3c477c6</parcelID>
+    <name>Thomas Kercheval</name>
+    <address>205 Ne 95th St</address>
+    <date>07/May/16 14:24:25</date>
+    <city>Seattle</city>
+    <state>WA</state>
+    <zip>98155</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>88123676ca8d4259012f6ee400e6cf31</parcelID>
+    <name>Random Person</name>
+    <address>3951 N 24th Ave</address>
+    <date>07/May/16 14:24:50</date>
+    <city>Seattle</city>
+    <state>WA</state>
+    <zip>98155</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>aed88db61e9281937b386fa35afae47a</parcelID>
+    <name>Arizona Man</name>
+    <address>684 N 65th Ln</address>
+    <date>07/May/16 14:29:01</date>
+    <city>Arizona City</city>
+    <state>AZ</state>
+    <zip>11354</zip>
+  </Parcel>
+  <Parcel>
+    <parcelID>c65acc2084ba29b5526fed720640dcd3</parcelID>
+    <name>Different State</name>
+    <address>3985 Ne Somewhere St</address>
+    <date>07/May/16 14:26:25</date>
+    <city>Wymerica</city>
+    <state>WY</state>
+    <zip>64523</zip>
+  </Parcel>
+</Parcels>
