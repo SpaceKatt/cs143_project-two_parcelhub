@@ -29,8 +29,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import parcelhub.gui_dialogs.AboutForm;
-import parcelhub.utilities.ParcelCSVFileReader;
-import parcelhub.utilities.ParcelCSVFileWriter;
+//import parcelhub.utilities.ParcelCSVFileReader;
+//import parcelhub.utilities.ParcelCSVFileWriter;
+import parcelhub.utilities.ParcelXMLFileReader;
 import parcelhub.utilities.ParcelXMLFileWriter;
 import parcelhub.utilities.PrintUtilities;
 import static parcelhub.utilities.SearchingAlgorithms.binarySearch;
@@ -73,20 +74,20 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         "OK", "OR", "PA", "PR", "PW", "RI", "SC", "SD", "TN", "TX", "UT", "VA", 
         "VI", "VT", "WA", "WI", "WV", "WY"};
     /** The relative path of our Parcel database. */
-    public static final String FILE_NAME = "src/parcelhub/data/Parcels.txt";
-    /** The index of the Parcel ID while reading from a CSV file. */
+    public static final String FILE_NAME = "src/parcelhub/data/Parcels.xml";
+    /** The index of the Parcel ID while reading from a XML file. */
     public static final int ID_INDEX = 0;
-    /** The index of the Customer Name while reading from a CSV file. */
+    /** The index of the Customer Name while reading from a XML file. */
     public static final int NAME_INDEX = 1;
-    /** The index of the Customer's Address while reading from a CSV file. */
+    /** The index of the Customer's Address while reading from a XML file. */
     public static final int ADDRESS_INDEX = 2;
-    /** The index of the Customer's City while reading from a CSV file. */
+    /** The index of the Customer's City while reading from a XML file. */
     public static final int CITY_INDEX = 3;
-    /** The index of the Customer's State while reading from a CSV file. */
+    /** The index of the Customer's State while reading from a XML file. */
     public static final int STATE_INDEX = 4;
-    /** The index of the Customer's ZipCode while reading from a CSV file. */
+    /** The index of the Customer's ZipCode while reading from a XML file. */
     public static final int ZIP_INDEX = 5;
-    /** The index of the Parcel scanning Date while reading from a CSV file. */
+    /** The index of the Parcel scanning Date while reading from a XML file. */
     public static final int DATE_INDEX = 6;
 
     /**
@@ -169,19 +170,19 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Reads Parcel objects from a file and populates ArrayList parcels.
+     * Reads Parcel objects from an XML file and populates ArrayList parcels.
      * @param fileName The fileName of our database.
      */
     private void readFromFile(String fileName) {
         parcels.clear();
-        ParcelCSVFileReader reader = new ParcelCSVFileReader(fileName);
-        String line;
-        while ((line = reader.readRecord()) != null) {
-            String[] parcelInfo = line.split(","); // Create Array of info
+        ParcelXMLFileReader reader = new ParcelXMLFileReader(fileName);
+        ArrayList<String[]> allParcels = reader.getParcelInformation();
+        for (int i = 0; i < allParcels.size(); i++) {
+            String[] parcelInfo = allParcels.get(i);
             Parcel parcel = new Parcel(parcelInfo); // Use Array Constructor
             parcels.add(parcel);
         }
-        reader.close();
+        
     }
     
     /**
@@ -1026,7 +1027,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             String newFileName = "src/parcelhub/data/" + newFileNameStub 
-                                                       + ".txt";
+                                                       + ".xml";
             File newFile = new File(newFileName);
             if (newFile.exists()) {
                 JOptionPane.showMessageDialog(null, "Database already exists.",
@@ -1368,14 +1369,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * @param file The file path of our database to be written pre-condition: a
      * valid file name, post-condition: a new text file
      * is created with the current Parcels in the database
-     * @see ParcelCSVFileWriter
+     * @see ParcelXMLFileWriter
      * @see Parcel
      */
     private void writeToFile(String file) {
-//        ParcelCSVFileWriter writer = new ParcelCSVFileWriter(file, parcels);
-//        writer.writeTheFile();
-        String xmlFile = file.replace(".txt", ".xml");
-        ParcelXMLFileWriter xmlWriter = new ParcelXMLFileWriter(parcels, xmlFile);
+        ParcelXMLFileWriter xmlWriter = new ParcelXMLFileWriter(parcels, file);
         xmlWriter.createXMLFile();
     }
 

@@ -31,7 +31,7 @@ import parcelhub.objects.Parcel;
 
 /**
  * ParcelCSVFileWriter.java
- * This class provides an abstraction to write our database one line at a time.
+ * This class provides an abstraction to write our database.
  * Using XML! For extra credit.
  * <pre>
     Project: Parcel Hub Database
@@ -57,6 +57,15 @@ public class ParcelXMLFileWriter {
     public ParcelXMLFileWriter(ArrayList<Parcel> parcelList, String filePath) {
         this.fileName = filePath;
         this.parcels = new ArrayList(parcelList);
+    }
+    
+    /**
+     * Creates an empty XML file at the location of our choice.
+     * @param filePath The path of the database we wish to write.
+     */
+    public ParcelXMLFileWriter(String filePath) {
+        this.fileName = filePath;
+        this.parcels = new ArrayList<>();
     }
     
     /**

@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import parcelhub.utilities.ParcelXMLFileWriter;
 
 /**
  * A form by which the User may select which database to populate our
@@ -128,11 +129,11 @@ public class DatabaseSelector extends javax.swing.JDialog {
         String dateNow = "src/parcelhub/data/" + dateFormat.format(today);
         String canidateName = dateNow;
         int additionalPart = 0;
-        while (fileAlreadyExists(canidateName + ".txt")) {
+        while (fileAlreadyExists(canidateName + ".xml")) {
             additionalPart++;
             canidateName = dateNow + "-" + additionalPart;
         }
-        return canidateName + ".txt";
+        return canidateName + ".xml";
     }
     
     /** 
@@ -296,12 +297,12 @@ public class DatabaseSelector extends javax.swing.JDialog {
      */
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         fileName = generateFileName();
-        File f = new File(fileName);
-        try {
-            f.createNewFile();
-        } catch (IOException ex) {
-            Logger.getLogger(DatabaseSelector.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ParcelXMLFileWriter newFileWriter = new ParcelXMLFileWriter(fileName);
+        newFileWriter.createXMLFile();
+//        try {
+//        } catch (IOException ex) {
+//            Logger.getLogger(DatabaseSelector.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         this.dispose();
     }//GEN-LAST:event_newButtonActionPerformed
 
