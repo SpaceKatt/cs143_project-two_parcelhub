@@ -193,7 +193,7 @@ public class ParcelWindow extends javax.swing.JDialog {
 
         selectButton.setMnemonic('s');
         selectButton.setText("Select");
-        selectButton.setToolTipText("Open selected database");
+        selectButton.setToolTipText("Search for selected database in main GUI");
         selectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectButtonActionPerformed(evt);
@@ -203,7 +203,7 @@ public class ParcelWindow extends javax.swing.JDialog {
 
         exitButton.setMnemonic('c');
         exitButton.setText("Cancel");
-        exitButton.setToolTipText("Cancel database opening");
+        exitButton.setToolTipText("Return to main GUI without doing anything");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitButtonActionPerformed(evt);

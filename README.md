@@ -13,6 +13,7 @@ that are requisite for a Shipping Hub.
 
   - Users may scan, edit, remove, search for, and view the information of
     Parcels which make their way into a database.
+  - XML is used for databases.
   - Multiple databases may be used to give users the chance to view Parcel
     listings from different days.
   - Databases may be renamed.
@@ -51,3 +52,4 @@ that are requisite for a Shipping Hub.
 
   - This project is backed up on GitHub.
   - This project is licensed under GPL v3.0
+  - This project was developed on Windows 10.

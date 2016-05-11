@@ -38,6 +38,7 @@ import static parcelhub.utilities.SortingAlgorithms.insertionSort;
     Revised on May 6, 2016, 7:13:53 PM
  </pre>
  * @author Thomas Kercheval
+ * @deprecated use {@link ParcelXMLFileWriter}
  */
 public class ParcelCSVFileWriter {
     /** File path (relative) to our database. */

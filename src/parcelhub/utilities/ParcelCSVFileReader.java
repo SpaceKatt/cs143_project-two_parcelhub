@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
  * Revised on May 6, 2016, 1:44:33 PM
  *
  * @author thomas.kercheval
+ * @deprecated use {@link ParcelXMLFileReader}
  */
 public class ParcelCSVFileReader {
     /** Relative path to the Dancer database. */
