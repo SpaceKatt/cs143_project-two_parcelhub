@@ -80,8 +80,8 @@ public class ParcelScanner extends javax.swing.JDialog {
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         titlePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
+        logoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Scan Parcel");
@@ -204,11 +204,11 @@ public class ParcelScanner extends javax.swing.JDialog {
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.SOUTH);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Scan a Parcel");
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        titleLabel.setText("Scan a Parcel");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/parcelhub/images/238be5e.png"))); // NOI18N
+        logoLabel.setText("jLabel2");
 
         javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
         titlePanel.setLayout(titlePanelLayout);
@@ -216,9 +216,9 @@ public class ParcelScanner extends javax.swing.JDialog {
             titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlePanelLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         titlePanelLayout.setVerticalGroup(
@@ -226,8 +226,8 @@ public class ParcelScanner extends javax.swing.JDialog {
             .addGroup(titlePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -236,28 +236,41 @@ public class ParcelScanner extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_zipTextFieldActionPerformed
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_cityTextFieldActionPerformed
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_addressTextFieldActionPerformed
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
     /** 
      * Save if all fields are Valid. If not all fields are valid, do nothing.
+     * @param evt The event which triggers this listener.
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.newParcel = null;
@@ -267,7 +280,7 @@ public class ParcelScanner extends javax.swing.JDialog {
     /**
      * Saves our new Parcel, performs validation of the inputs, and closes 
      * the window.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String name = this.nameTextField.getText();
@@ -336,13 +349,13 @@ public class ParcelScanner extends javax.swing.JDialog {
     private javax.swing.JTextField cityTextField;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel informationPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton saveButton;
     private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel stateLabel;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JLabel zipLabel;
     private javax.swing.JTextField zipTextField;

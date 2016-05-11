@@ -160,7 +160,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
         databaseList = new javax.swing.JList<>();
         controlPanel = new javax.swing.JPanel();
         newButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        openCancelPanel = new javax.swing.JPanel();
         openButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         titlePanel = new javax.swing.JPanel();
@@ -210,7 +210,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
         });
         controlPanel.add(newButton);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        openCancelPanel.setLayout(new java.awt.GridLayout(1, 2));
 
         openButton.setMnemonic('o');
         openButton.setText("Open");
@@ -220,7 +220,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
                 openButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(openButton);
+        openCancelPanel.add(openButton);
 
         exitButton.setMnemonic('c');
         exitButton.setText("Cancel");
@@ -230,9 +230,9 @@ public class DatabaseSelector extends javax.swing.JDialog {
                 exitButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(exitButton);
+        openCancelPanel.add(exitButton);
 
-        controlPanel.add(jPanel1);
+        controlPanel.add(openCancelPanel);
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.SOUTH);
 
@@ -272,7 +272,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
 
     /**
      * Exits our application.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         fileName = null;
@@ -282,7 +282,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
     /**
      * Saves the name of the currently selected database and closes the \
      * Dialog.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         fileName = this.databaseList.getSelectedValue();
@@ -292,7 +292,7 @@ public class DatabaseSelector extends javax.swing.JDialog {
     /**
      * Generates a new, unique name by calling generateFileName() and closes
      * the Dialog.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         fileName = generateFileName();
@@ -310,10 +310,10 @@ public class DatabaseSelector extends javax.swing.JDialog {
     private javax.swing.JList<String> databaseList;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JButton exitButton;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton newButton;
     private javax.swing.JButton openButton;
+    private javax.swing.JPanel openCancelPanel;
     private javax.swing.JLabel parcelhubLabel;
     private javax.swing.JLabel selectLabel;
     private javax.swing.JPanel titlePanel;

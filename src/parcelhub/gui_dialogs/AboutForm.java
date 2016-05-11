@@ -41,7 +41,7 @@ public class AboutForm extends javax.swing.JDialog {
         this.getRootPane().setDefaultButton(closeJButton);
         this.setModal(true);
         setLocationRelativeTo(null);
-        this.jTextArea1.setCaretPosition(0);
+        this.aboutTextArea.setCaretPosition(0);
     }
 
     /**
@@ -58,8 +58,8 @@ public class AboutForm extends javax.swing.JDialog {
         titleJLabel = new javax.swing.JLabel();
         aboutJPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
+        aboutTextArea = new javax.swing.JTextArea();
+        bottomPanel = new javax.swing.JPanel();
         copyrightJLabel = new javax.swing.JLabel();
         closeJButton = new javax.swing.JButton();
         warningJLabel = new javax.swing.JLabel();
@@ -101,15 +101,15 @@ public class AboutForm extends javax.swing.JDialog {
 
         getContentPane().add(titleJPanel, java.awt.BorderLayout.NORTH);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("# Parcel Hub Project\n\nA simple application emulating the receiving of Parcels and storing\ntheir information, for my Java class (CS143/Spr16).\n\n#### Project Objective:\n\nTo create a GUI that allows a user to scan, edit, and store Parcels in\nmultiple databases. This application must also provide basic functionalities\nthat are requisite for a Shipping Hub.\n\n#### Features:\n\n  - Users may scan, edit, remove, search for, and view the information of\n    Parcels which make their way into a database.\n  - Multiple databases may be used to give users the chance to view Parcel\n    listings from different days.\n  - Databases may be renamed.\n  - Users may search for Parcels by ID, Customer Name, and ZipCode.\n  - Search by name and ZipCode spawns a new window which lists all results\n    found. Upon closing this window, the selected Parcel will be found and\n    highlighted in the main GUI Window.\n  - Individual Parcel information, or the entire GUI, may be printed from the\n    File menu.\n  - Parcels are listed by state, and only states which contain Parcels are\n    listed.\n  - All Parcels may be viewed at once from the Action menu.\n  - When viewing all Parcels, or search by name/zip results, Parcels may be\n    sorted by ID, Customer Name, or ZipCode.\n  - ToolTip Text is given for all buttons and all menus/menuItems.\n  - Mnemonics are given for all buttons and all menus/menuItems.\n  - Buttons are enabled/disabled based on whether their actions are valid\n    within the current context of the application.\n  - Splash screen is displayed on startup.\n  - Parcels are sorted by ID in the State listings.\n  - Changes to the database are dynamic in nature, e.g. Parcels that are\n    deleted do not reappear when the application is restarted.\n  - Fields from editing and scanning Parcels are validated with regular\n    expressions.\n  - Dancer deletion is confirmed before performed.\n  - Parcel ID is generated using an MD5 digest, hence all IDs are unique\n    between all databases. Even Parcels with the exact same information will\n    produce unique IDs since the time of the Parcel being scanned is being fed\n    into the cryptographic hash.\n\n##### Contact:\n\n    Thomas Kercheval -> spacekattpoispin@gmail.com\n\n##### Notes:\n\n  - This project is backed up on GitHub.\n  - This project is licensed under GPL v3.0\n  - Press Enter to close this window\n");
-        jTextArea1.setToolTipText("About this project");
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(jTextArea1);
+        aboutTextArea.setEditable(false);
+        aboutTextArea.setColumns(20);
+        aboutTextArea.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        aboutTextArea.setLineWrap(true);
+        aboutTextArea.setRows(5);
+        aboutTextArea.setText("# Parcel Hub Project\n\nA simple application emulating the receiving of Parcels and storing\ntheir information, for my Java class (CS143/Spr16).\n\n#### Project Objective:\n\nTo create a GUI that allows a user to scan, edit, and store Parcels in\nmultiple databases. This application must also provide basic functionalities\nthat are requisite for a Shipping Hub.\n\n#### Features:\n\n  - Users may scan, edit, remove, search for, and view the information of\n    Parcels which make their way into a database.\n  - Multiple databases may be used to give users the chance to view Parcel\n    listings from different days.\n  - Databases may be renamed.\n  - Users may search for Parcels by ID, Customer Name, and ZipCode.\n  - Search by name and ZipCode spawns a new window which lists all results\n    found. Upon closing this window, the selected Parcel will be found and\n    highlighted in the main GUI Window.\n  - Individual Parcel information, or the entire GUI, may be printed from the\n    File menu.\n  - Parcels are listed by state, and only states which contain Parcels are\n    listed.\n  - All Parcels may be viewed at once from the Action menu.\n  - When viewing all Parcels, or search by name/zip results, Parcels may be\n    sorted by ID, Customer Name, or ZipCode.\n  - ToolTip Text is given for all buttons and all menus/menuItems.\n  - Mnemonics are given for all buttons and all menus/menuItems.\n  - Buttons are enabled/disabled based on whether their actions are valid\n    within the current context of the application.\n  - Splash screen is displayed on startup.\n  - Parcels are sorted by ID in the State listings.\n  - Changes to the database are dynamic in nature, e.g. Parcels that are\n    deleted do not reappear when the application is restarted.\n  - Fields from editing and scanning Parcels are validated with regular\n    expressions.\n  - Dancer deletion is confirmed before performed.\n  - Parcel ID is generated using an MD5 digest, hence all IDs are unique\n    between all databases. Even Parcels with the exact same information will\n    produce unique IDs since the time of the Parcel being scanned is being fed\n    into the cryptographic hash.\n\n##### Contact:\n\n    Thomas Kercheval -> spacekattpoispin@gmail.com\n\n##### Notes:\n\n  - This project is backed up on GitHub.\n  - This project is licensed under GPL v3.0\n  - Press Enter to close this window\n");
+        aboutTextArea.setToolTipText("About this project");
+        aboutTextArea.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(aboutTextArea);
 
         javax.swing.GroupLayout aboutJPanelLayout = new javax.swing.GroupLayout(aboutJPanel);
         aboutJPanel.setLayout(aboutJPanelLayout);
@@ -129,11 +129,11 @@ public class AboutForm extends javax.swing.JDialog {
 
         getContentPane().add(aboutJPanel, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+        bottomPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         copyrightJLabel.setText("Copyright 2016; Thomas Kercheval");
         copyrightJLabel.setToolTipText("It's my name :D");
-        jPanel1.add(copyrightJLabel);
+        bottomPanel.add(copyrightJLabel);
 
         closeJButton.setMnemonic('c');
         closeJButton.setText("Close");
@@ -143,20 +143,20 @@ public class AboutForm extends javax.swing.JDialog {
                 closeJButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(closeJButton);
+        bottomPanel.add(closeJButton);
 
         warningJLabel.setText("If: Steal Code -> Then: Suffer Curse");
         warningJLabel.setToolTipText("@see Death");
-        jPanel1.add(warningJLabel);
+        bottomPanel.add(warningJLabel);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(bottomPanel, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * Closes the About form and returns to main GUI.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void closeJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeJButtonActionPerformed
         this.dispose();
@@ -164,11 +164,11 @@ public class AboutForm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aboutJPanel;
+    private javax.swing.JTextArea aboutTextArea;
+    private javax.swing.JPanel bottomPanel;
     private javax.swing.JButton closeJButton;
     private javax.swing.JLabel copyrightJLabel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel logoJLabel;
     private javax.swing.JLabel titleJLabel;
     private javax.swing.JPanel titleJPanel;

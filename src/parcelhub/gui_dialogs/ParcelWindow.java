@@ -68,7 +68,7 @@ public class ParcelWindow extends javax.swing.JDialog {
    /**
      * Constructs the Dialog, populates the lists with the items in `parcels`.
      * @param parcels The ArrayList of all extant Parcels
-     * @param titleWindow 
+     * @param titleWindow The title we will set for our Dialog.
      */
     public ParcelWindow(ArrayList<Parcel> parcels, String titleWindow) {
         initComponents();
@@ -149,7 +149,7 @@ public class ParcelWindow extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         parcelList = new javax.swing.JList<>();
         controlPanel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        controlButtonPanel = new javax.swing.JPanel();
         selectButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         sortPanel = new javax.swing.JPanel();
@@ -189,7 +189,7 @@ public class ParcelWindow extends javax.swing.JDialog {
 
         controlPanel.setLayout(new java.awt.GridLayout(1, 1));
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        controlButtonPanel.setLayout(new java.awt.GridLayout(1, 2));
 
         selectButton.setMnemonic('s');
         selectButton.setText("Select");
@@ -199,7 +199,7 @@ public class ParcelWindow extends javax.swing.JDialog {
                 selectButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(selectButton);
+        controlButtonPanel.add(selectButton);
 
         exitButton.setMnemonic('c');
         exitButton.setText("Cancel");
@@ -209,9 +209,9 @@ public class ParcelWindow extends javax.swing.JDialog {
                 exitButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(exitButton);
+        controlButtonPanel.add(exitButton);
 
-        controlPanel.add(jPanel1);
+        controlPanel.add(controlButtonPanel);
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.SOUTH);
 
@@ -259,7 +259,7 @@ public class ParcelWindow extends javax.swing.JDialog {
     /**
      * Saves the selected ParcelID and closes this window, the main GUI uses
      * this ParcelID to search and display the Parcel selected here.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         parcelID = this.parcelList.getSelectedValue().substring(0, 32);
@@ -269,33 +269,42 @@ public class ParcelWindow extends javax.swing.JDialog {
     /**
      * Exits the Dialog and tells the GUI to cancel by setting ParcelID to 
      * null.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         parcelID = null;
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
-    /** Calls sortParcels() to sort the Parcels accordingly. */
+    /** 
+     * Calls sortParcels() to sort the Parcels accordingly. 
+     * @param evt The event which triggers this listener.
+     */
     private void sortZipRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortZipRadioButtonActionPerformed
         sortParcels();
     }//GEN-LAST:event_sortZipRadioButtonActionPerformed
 
-    /** Calls sortParcels() to sort the Parcels accordingly. */
+    /** 
+     * Calls sortParcels() to sort the Parcels accordingly. 
+     * @param evt The event which triggers this listener.
+     */
     private void sortIDRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortIDRadioButtonActionPerformed
         sortParcels();
     }//GEN-LAST:event_sortIDRadioButtonActionPerformed
 
-    /** Calls sortParcels() to sort the Parcels accordingly. */
+    /** 
+     * Calls sortParcels() to sort the Parcels accordingly. 
+     * @param evt The event which triggers this listener.
+     */
     private void sortNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortNameRadioButtonActionPerformed
         sortParcels();
     }//GEN-LAST:event_sortNameRadioButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel controlButtonPanel;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JButton exitButton;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> parcelList;
     private javax.swing.JButton selectButton;

@@ -48,6 +48,7 @@ public class ParcelEditor extends javax.swing.JDialog {
      * Creates new form ParcelEditer, copies the Parcel that is fed to this
      * constructor as an instance variable, and displays its information in
      * JTextFields.
+     * @param parcel The parcel we are going to edit.
      */
     public ParcelEditor(Parcel parcel) {
         initComponents();
@@ -303,28 +304,41 @@ public class ParcelEditor extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_addressTextFieldActionPerformed
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_cityTextFieldActionPerformed
 
-    /** Try to save if enter is pressed in this text field. */
+    /** 
+     * Try to save if enter is pressed in this text field. 
+     * @param evt The event which triggers this listener.
+     */
     private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_zipTextFieldActionPerformed
 
     /** 
      * Save if all fields are Valid. If not all fields are valid, do nothing.
+     * @param evt The event which triggers this listener.
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String name = this.nameTextField.getText();
@@ -347,7 +361,7 @@ public class ParcelEditor extends javax.swing.JDialog {
     /**
      * Cancels the edit by setting editParcel to be null and closing the
      * window.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.editParcel = null;

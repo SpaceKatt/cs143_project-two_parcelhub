@@ -528,9 +528,6 @@
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
                 <Property name="toolTipText" type="java.lang.String" value="The generated ID of the Parcel being displayed"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="parcelIDTextFieldActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="nameTextField">
               <Properties>
@@ -538,9 +535,6 @@
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
                 <Property name="toolTipText" type="java.lang.String" value="The name of the recipient of the Parcel being displayed"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameTextFieldActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="addressTextField">
               <Properties>
@@ -548,9 +542,6 @@
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
                 <Property name="toolTipText" type="java.lang.String" value="The address of the recipient of the Parcel being displayed"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addressTextFieldActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="stateTextField">
               <Properties>
@@ -558,9 +549,6 @@
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
                 <Property name="toolTipText" type="java.lang.String" value="The state of the recipient of the Parcel being displayed"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stateTextFieldActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="stateLabel">
               <Properties>
@@ -573,9 +561,6 @@
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
                 <Property name="toolTipText" type="java.lang.String" value="The City of the recipient of the Parcel being displayed"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cityTextFieldActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="zipLabel">
               <Properties>
@@ -588,9 +573,6 @@
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
                 <Property name="toolTipText" type="java.lang.String" value="The ZipCode of the recipient of the Parcel being displayed"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zipTextFieldActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

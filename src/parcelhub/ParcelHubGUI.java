@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 import parcelhub.gui_dialogs.AboutForm;
 import parcelhub.utilities.ParcelCSVFileReader;
 import parcelhub.utilities.ParcelCSVFileWriter;
+import parcelhub.utilities.ParcelXMLFileWriter;
 import parcelhub.utilities.PrintUtilities;
 import static parcelhub.utilities.SearchingAlgorithms.binarySearch;
 import static parcelhub.utilities.SearchingAlgorithms.linearNameSearch;
@@ -304,7 +305,6 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * This method sorts every ArrayList in this application by ID.
-     * @see parcelhub.utilities.SortingAlgorithms.insertionSort
      */
     private void sortAllArrayLists() {
         insertionSort(parcels);
@@ -509,60 +509,30 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         parcelIDTextField.setEditable(false);
         parcelIDTextField.setText("\n");
         parcelIDTextField.setToolTipText("The generated ID of the Parcel being displayed");
-        parcelIDTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                parcelIDTextFieldActionPerformed(evt);
-            }
-        });
 
         nameTextField.setEditable(false);
         nameTextField.setText("\n");
         nameTextField.setToolTipText("The name of the recipient of the Parcel being displayed");
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
 
         addressTextField.setEditable(false);
         addressTextField.setText("\n");
         addressTextField.setToolTipText("The address of the recipient of the Parcel being displayed");
-        addressTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressTextFieldActionPerformed(evt);
-            }
-        });
 
         stateTextField.setEditable(false);
         stateTextField.setText("\n");
         stateTextField.setToolTipText("The state of the recipient of the Parcel being displayed");
-        stateTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stateTextFieldActionPerformed(evt);
-            }
-        });
 
         stateLabel.setText("State:");
 
         cityTextField.setEditable(false);
         cityTextField.setText("\n");
         cityTextField.setToolTipText("The City of the recipient of the Parcel being displayed");
-        cityTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityTextFieldActionPerformed(evt);
-            }
-        });
 
         zipLabel.setText("Zip:");
 
         zipTextField.setEditable(false);
         zipTextField.setText("\n");
         zipTextField.setToolTipText("The ZipCode of the recipient of the Parcel being displayed");
-        zipTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zipTextFieldActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
         informationPanel.setLayout(informationPanelLayout);
@@ -874,35 +844,11 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void parcelIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parcelIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_parcelIDTextFieldActionPerformed
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
-    private void addressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addressTextFieldActionPerformed
-
-    private void stateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_stateTextFieldActionPerformed
-
-    private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cityTextFieldActionPerformed
-
-    private void zipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zipTextFieldActionPerformed
-
     /**
      * This method Listens to see if the value in parcelList has changed, and
      * upon hearing an event it updates which Parcel has its information 
      * displayed.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void parcelListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_parcelListValueChanged
         showParcelInformation(parcelList.getSelectedIndex());
@@ -910,6 +856,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /** 
      * Displays the Parcels for the State which was selected in stateComboBox. 
+     * @param evt The event which triggers this listener.
      */
     private void stateComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stateComboBoxItemStateChanged
         displayParcels();
@@ -917,7 +864,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     /**
      * Scans a new Parcel and adds it to our list. The database is rewritten
      * after every successful new Parcel addition.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void scanNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanNewButtonActionPerformed
         int location = this.parcelList.getSelectedIndex();
@@ -948,7 +895,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * Initiates search for a Parcel by ID, takes input from user.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String parcelID = JOptionPane.showInputDialog(this, "Search for:",
@@ -959,7 +906,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     
     /**
      * Removes a Parcel from our database.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         int reply = JOptionPane.showConfirmDialog(this, "Are you sure?",
@@ -982,7 +929,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
-    /** Displays the next Parcel in parcelList. */
+    /** 
+     * Displays the next Parcel in parcelList. 
+     * @param evt The event which triggers this listener.
+     */
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         int currentIndex = this.parcelList.getSelectedIndex();
         int listSize = this.parcelList.getModel().getSize();
@@ -990,7 +940,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         this.parcelList.setSelectedIndex(nextIndex);
     }//GEN-LAST:event_nextButtonActionPerformed
 
-    /** Displays the previous Parcel in parcelList. */
+    /** 
+     * Displays the previous Parcel in parcelList. 
+     * @param evt The event which triggers this listener.
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         int currentIndex = this.parcelList.getSelectedIndex();
         int listSize = this.parcelList.getModel().getSize();
@@ -1001,6 +954,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     /** 
      * Launches the form in which the User may edit the currently selected 
      * Parcel. 
+     * @param evt The event which triggers this listener.
      */
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int location = this.parcelList.getSelectedIndex();
@@ -1035,7 +989,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     /** 
      * Allows the User to open a different database and work with a different
      * set of Parcels.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         String oldFileName = this.fileName;
@@ -1060,7 +1014,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     /**
      * Allows the user to save the current database under a new name. Does
      * not delete the old file, and will only save under the new name.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
         String newFileNameStub = JOptionPane.showInputDialog(this, "Save as:",
@@ -1091,7 +1045,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * Prints the entire GUI.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void printMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuItemActionPerformed
         PrintUtilities.printComponent(this);
@@ -1099,7 +1053,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * Prints a single Parcel.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void printParcelMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printParcelMenuItemActionPerformed
         PrintUtilities.printComponent(this.informationPanel);
@@ -1107,38 +1061,56 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * Exits the application.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    /** Scans a Parcel by calling the corresponding button listener. */
+    /** 
+     * Scans a Parcel by calling the corresponding button listener. 
+     * @param evt The event which triggers this listener.
+     */
     private void scanMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanMenuItemActionPerformed
         scanNewButtonActionPerformed(evt);
     }//GEN-LAST:event_scanMenuItemActionPerformed
 
-    /** Removes a Parcel by calling the corresponding button listener. */
+    /** 
+     * Removes a Parcel by calling the corresponding button listener. 
+     * @param evt The event which triggers this listener.
+     */
     private void removeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMenuItemActionPerformed
         removeButtonActionPerformed(evt);
     }//GEN-LAST:event_removeMenuItemActionPerformed
 
-    /** Edits a Parcel by calling the corresponding button listener. */
+    /** 
+     * Edits a Parcel by calling the corresponding button listener. 
+     * @param evt The event which triggers this listener.
+     */
     private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
         editButtonActionPerformed(evt);
     }//GEN-LAST:event_editMenuItemActionPerformed
 
-    /** Searches for a Parcel by calling the corresponding button listener. */
+    /** 
+     * Searches for a Parcel by calling the corresponding button listener. 
+     * @param evt The event which triggers this listener.
+     */
     private void searchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMenuItemActionPerformed
         searchButtonActionPerformed(evt);
     }//GEN-LAST:event_searchMenuItemActionPerformed
 
-    /** Selects previous Parcel by calling corresponding button listener. */
+    /** 
+     * Selects previous Parcel by calling corresponding button listener. 
+     * @param evt The event which triggers this listener.
+     */
     private void backMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backMenuItemActionPerformed
         backButtonActionPerformed(evt);
     }//GEN-LAST:event_backMenuItemActionPerformed
 
-    /** Selects next Parcel by calling corresponding button listener. */
+    /** 
+     * Selects next Parcel by calling corresponding button listener. 
+     * @param evt The event which triggers this listener.
+     */
     private void nextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMenuItemActionPerformed
         nextButtonActionPerformed(evt);
     }//GEN-LAST:event_nextMenuItemActionPerformed
@@ -1147,7 +1119,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * Searches for all instances of where a Parcel Customer name contains
      * our search key, then spawns a new Dialog where the user may select
      * a Parcel out of all search return results.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void searchNameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchNameMenuItemActionPerformed
         String customerName = JOptionPane.showInputDialog(this, "Search for:",
@@ -1173,7 +1145,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
 
     /**
      * Spawns a new Dialog which lists all the Parcels in parcels ArrayList.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void viewAllParcelsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllParcelsMenuItemActionPerformed
         ParcelWindow window = new ParcelWindow(parcels, "All Parcels");
@@ -1193,7 +1165,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * Searches for all instances of where a Parcel Customer ZipCode contains
      * our search key, then spawns a new Dialog where the user may select
      * a Parcel out of all search return results.
-     * @param evt 
+     * @param evt The event which triggers this listener.
      */
     private void searchZipMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchZipMenuItemActionPerformed
         String zipCode = JOptionPane.showInputDialog(this, "Search for:",
@@ -1217,7 +1189,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchZipMenuItemActionPerformed
 
-    /** Spawns the About Form. */
+    /** 
+     * Spawns the About Form. 
+     * @param evt The event which triggers this listener.
+     */
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         AboutForm about = new AboutForm();
         about.setVisible(true);
@@ -1226,6 +1201,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     /** 
      * Clears the displayed Parcel information. If this wasn't included
      * in the project rubric I wouldn't have included it in this application.
+     * @param evt The event which triggers this listener.
      */
     private void clearMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearMenuItemActionPerformed
         clearParcelDisplay();
@@ -1333,7 +1309,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * Searches for a Parcel in our database by its ID. If the Parcel is
      * found it will be selected in its state listing. If not then the user
      * will be notified.
-     * @param parcelID 
+     * @param parcelID The ID of the Parcel we wish to search for.
      */
     private void searchParcel(String parcelID) {
         if (parcelID == null || parcelID.length() == 0) {
@@ -1395,9 +1371,12 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * @see ParcelCSVFileWriter
      * @see Parcel
      */
-    public void writeToFile(String file) {
-        ParcelCSVFileWriter writer = new ParcelCSVFileWriter(file, parcels);
-        writer.writeTheFile();
+    private void writeToFile(String file) {
+//        ParcelCSVFileWriter writer = new ParcelCSVFileWriter(file, parcels);
+//        writer.writeTheFile();
+        String xmlFile = file.replace(".txt", ".xml");
+        ParcelXMLFileWriter xmlWriter = new ParcelXMLFileWriter(parcels, xmlFile);
+        xmlWriter.createXMLFile();
     }
 
     /**
