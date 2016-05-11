@@ -73,8 +73,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
         "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", 
         "OK", "OR", "PA", "PR", "PW", "RI", "SC", "SD", "TN", "TX", "UT", "VA", 
         "VI", "VT", "WA", "WI", "WV", "WY"};
-    /** The relative path of our Parcel database. */
-    public static final String FILE_NAME = "src/parcelhub/data/Parcels.xml";
+
     /** The index of the Parcel ID while reading from a XML file. */
     public static final int ID_INDEX = 0;
     /** The index of the Customer Name while reading from a XML file. */
@@ -126,8 +125,8 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     
     /**
      * Cycles through every possible state and adds the ones which have Parcels
-     * affiliated with them to the stateComboBox to be displayed. If there are
-     * no Parcels we display Washington State and alert the User.
+     * affiliated with them to the stateComboBox, to be displayed. If there are
+     * no Parcels, we display Washington State and alert the User.
      */
     private void setModelForStateCombo() {
         ArrayList<String> filledStates = new ArrayList<>();
@@ -153,9 +152,10 @@ public class ParcelHubGUI extends javax.swing.JFrame {
      * This method finds the first state, alphabetically, that has Parcels
      * being delivered to it. 
      * 
-     * # NOTE: This method may not be necessary due to the after added 
+     * #NOTE: This method may not be necessary due to the after added 
      * setModelForStateCombo() method. This is so because to non-empty states
-     * are displayed to begin with.
+     * are displayed to begin with. {@link setModelForStateCombo}
+     * 
      */
     private void displayFirstNonEmptyState() {
         String state = (String) stateComboBox.getSelectedItem();
@@ -292,7 +292,7 @@ public class ParcelHubGUI extends javax.swing.JFrame {
     
     /**
      * This method returns a HashMap whose keys are State Abbreviations and
-     * whose values are HashMaps.
+     * whose values are Parcel ArralyLists.
      * @return A HashMap with the State Abbreviations as keys and ArrayLists
      * of Parcels as values.
      */
